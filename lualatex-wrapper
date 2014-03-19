@@ -1,0 +1,35 @@
+#! /usr/bin/env python3
+
+from mdeqn import *
+
+import subprocess
+import sys
+import re
+import tempfile
+import traceback
+
+if __name__ == '__main__':
+
+    assert len( sys.argv ) > 1
+    jobname = sys.argv[-1]
+    if jobname.endswith( '.tex' ):
+        jobname = jobname[:-4]
+
+    with open( jobname + '.tex' ) as doc:
+        doc = doc.read()
+
+    def parse_mdeqn( match ):
+
+        lines = match.group(1).split( '\n' )
+        try:
+            return parse( lines ) + '%\n' * match.group(1).count( '\n' )
+        except:
+            traceback.print_exc()
+            return '\\begin{{verbatim}}{}\\end{{verbatim}}'.format( match.group( 1 ) )
+
+    doc, n = re.subn( r'\\begin\{mdeqn\}(.*?)\\end\{mdeqn\}', parse_mdeqn, doc, flags = re.DOTALL )
+
+    with tempfile.NamedTemporaryFile( mode = 'w', encoding = 'utf8' ) as output:
+        output.write( doc )
+        output.file.flush()
+        subprocess.call( ( 'lualatex', '-jobname', jobname ) + tuple( sys.argv[1:-1] ) + ( output.name, ) )
