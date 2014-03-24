@@ -123,6 +123,10 @@ def parse_sub( block ):
                     raise ValueError( 'expected closing vertical line' )
 
                 latex_matrix = parse_matrix( block[vert_top:vert_bottom,1:j] )
+                if ch_left in ( '{', '}' ):
+                    ch_left = '\\' + ch_left
+                if ch_right in ( '{', '}' ):
+                    ch_right = '\\' + ch_right
                 if ch_left != '.' or ch_right != '.':
                     latex += '\\left{}{}\\right{}'.format( ch_left, latex_matrix, ch_right )
                 else:
@@ -451,6 +455,12 @@ def test():
           z       z
          y      y
         x   ≠ {x }
+    ''' )
+
+    _parse( r'''
+    { a = 1 .
+    {       .
+    { b = 2 .
     ''' )
 
 
