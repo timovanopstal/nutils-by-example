@@ -349,7 +349,7 @@ def parse_matrix( block ):
     alignment = []
     for column in columns:
         for i in range( column.start, column.stop ):
-            if set( block[i,:] ) <= { '&', ' ' }:
+            if '&' in block[:,i] and set( block[:,i] ) <= { '&', ' ' }:
                 alignment.append( 'r@{}l' )
                 break
         else:
