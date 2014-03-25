@@ -234,6 +234,24 @@ def parse_sub( block ):
                 proceed = False
 
         if proceed:
+
+            if block[baseline,0] == '"':
+                for i in range( 1, block.shape[1] ):
+                    if block[baseline,i] == '"':
+                        break
+                else:
+                    raise ValueError( 'could not find matching "' )
+
+                if not block[:baseline,0:i+1].is_empty():
+                    raise ValueError( 'unexpected symbols above text' )
+                if not block[baseline+1:,0:i+1].is_empty():
+                    raise ValueError( 'unexpected symbols below text' )
+
+                latex += '\\text{{{}}}'.format( block[baseline,1:i].as_string() )
+                block = block[:,i+1:]
+                proceed = False
+
+        if proceed:
             if not block[:baseline,0].is_empty():
                 raise ValueError( 'unexpected symbol above symbol on baseline' )
             if not block[baseline+1:,0].is_empty():
@@ -440,15 +458,15 @@ def test():
     ''' )
 
     _parse( r'''
-                                         2
-                |         \text{low}    |
-             ∫  | q (x)- q          (x) |  dλ(x)
-              E |  i      i             |
-    S(q,E) = ――――――――――――――――――――――――――――――――――― .
-                                 2
-                        |       |
-                     ∫  | q (x) |  dλ(x)
-                      E |  i    |
+                                    2
+                |         "low"    |
+             ∫  | q (x)- q     (x) |  dλ(x)
+              E |  i      i        |
+    S(q,E) = ―――――――――――――――――――――――――――――― .
+                               2
+                      |       |
+                   ∫  | q (x) |  dλ(x)
+                    E |  i    |
     ''' )
 
     _parse( r'''
@@ -458,9 +476,9 @@ def test():
     ''' )
 
     _parse( r'''
-    { a = 1 .
-    {       .
-    { b = 2 .
+    { a = "foo" .
+    {           .
+    { b = "bar" .
     ''' )
 
 
