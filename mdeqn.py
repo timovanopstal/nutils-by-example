@@ -342,8 +342,21 @@ def parse_matrix( block ):
     if len( rows ) == 1 and len( columns ) == 1:
         return parse_sub( block )
 
+    # If each cell in a column has an `&`, vertically aligned, (on the
+    # baseline, but we don't check this yet), use right alignment left of `&`
+    # and left alignment right of `&`.  Otherwise use centre alignment.
+
+    alignment = []
+    for column in columns:
+        for i in range( column.start, column.stop ):
+            if set( block[i,:] ) <= { '&', ' ' }:
+                alignment.append( 'l@{}r' )
+                break
+        else:
+            alignment.append( 'c' )
+
     latex_elements = '\\\\'.join( '&'.join( parse_sub( block[row,column] ) for column in columns ) for row in rows )
-    return '\\begin{{array}}{{{}}}{}\\end{{array}}'.format( 'c' * len( columns ), latex_elements )
+    return '\\begin{{array}}{{{}}}{}\\end{{array}}'.format( ''.join( alignment ), latex_elements )
 
 
 def parse( block ):
@@ -476,9 +489,9 @@ def test():
     ''' )
 
     _parse( r'''
-    { a = "foo" .
-    {           .
-    { b = "bar" .
+    { a &= "foo"   c &= "spam" .
+    {                          .
+    { b &= "bar"   d &= "eggs" .
     ''' )
 
 
