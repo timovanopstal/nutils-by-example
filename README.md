@@ -217,8 +217,11 @@ becomes in latex
         A very \\ very very \\ very \\ long equation.
     \end{multline}
 
+Wrappers
+========
+
 lualatex-wrapper
-================
+----------------
 
 The `lualatex-wrapper` python script preprocesses the latex document and feeds
 the result to `lualatex`.  Everything between `\begin{mdeqn}` and `\end{mdeqn}`
@@ -239,3 +242,19 @@ When using unicode math symbols, load the latex package `mathspec` or
 `unicode-math`.  The `amsmath` package may be required for some features.  The
 script only parses the document specified on the command line.  Source files
 included via `input` or `include` are not supported.
+
+pandoc-filter
+-------------
+
+The `pandoc-filter` python script can be used as a `pandoc` filter to parse
+display equations marked as follows:
+
+    $$mdeqn
+                ∂u (x)
+                  i
+        ∫  v(x) ------ dx
+         Ω       ∂x
+    $$
+
+To use this filter, add the option `--filter=/path/to/mdeqn/pandoc-filter` to
+the pandoc command line.
