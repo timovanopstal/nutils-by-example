@@ -20,16 +20,42 @@
 
 
 import re
+import unicodedata
 
 
 class Block:
 
     def __init__( self, lines ):
 
-        lines = tuple( lines )
+        lines = tuple( map( self._get_characters, lines ) )
         n = 0 if len( lines ) == 0 else max( map( len, lines ) )
-        self._lines = tuple( line.ljust( n ) for line in lines )
+        self._lines = tuple( self._ljust( line, n ) for line in lines )
         self.shape = ( len( self._lines ), n )
+
+    @staticmethod
+    def _get_characters( line ):
+
+        if not isinstance( line, str ):
+            return line
+
+        # Convert unicode strings to a list of characters.
+        # Combining characters are merged with the preceeding character.
+
+        characters = []
+        for ch in line:
+            if unicodedata.combining( ch ) and len( characters ) > 0:
+                characters[-1] = characters[-1] + ch
+            else:
+                characters.append( ch )
+        return tuple( characters )
+
+    @staticmethod
+    def _ljust( line, n ):
+
+        if len( line ) < n:
+            return line + ( ' ', ) * ( n - len( line ) )
+        else:
+            return line
 
     def __getitem__( self, item ):
 
@@ -50,11 +76,11 @@ class Block:
 
     def __str__( self ):
 
-        return '\n'.join( self._lines )
+        return '\n'.join( ''.join( line ) for line in self._lines )
 
     def __repr__( self ):
 
-        return '\n' + '\n'.join( '>' + line for line in self._lines )
+        return '\n' + '\n'.join( '>' + ''.join( line ) for line in self._lines )
 
     def __iter__( self ):
 
@@ -73,7 +99,7 @@ class Block:
         elif self.shape[0] > 1:
             raise ValueError( 'Cannot convert block with more than one row to a string.' )
 
-        return self._lines[0]
+        return ''.join( self._lines[0] )
 
 
 def _determine_fraction_length( line ):
@@ -513,6 +539,11 @@ def test():
     { a &= "foo"   c &= "spam" .
     {                          .
     { b &= "bar"   d &= "eggs" .
+    ''' )
+
+    _parse( r'''
+    y(x) = ∑  ŷ  L (x)
+            j  j  j
     ''' )
 
 
