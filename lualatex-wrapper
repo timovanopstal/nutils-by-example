@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
         lines = match.group(1).split( '\n' )
         try:
-            return parse( lines ) + '%\n' * match.group(1).count( '\n' )
+            return '%\n' * match.group(1).count( '\n' ) + parse( lines )
         except:
             traceback.print_exc()
             return '\\begin{{verbatim}}{}\\end{{verbatim}}'.format( match.group( 1 ) )
