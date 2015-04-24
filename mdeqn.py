@@ -119,6 +119,7 @@ def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
     baseline = None
     fraction_symbols = ( '-', '―' )
     is_multiline = False
+    has_custom_tag = False
 
     # skip white columns
 
@@ -247,6 +248,7 @@ def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
                     label = match.group(2)
 
                 if tag:
+                    has_custom_tag = True
                     latex += '\\tag{{{}}}'.format( tag )
                 if label:
                     latex += '\\label{{{}{}}}'.format( equation_label_prefix, label )
@@ -347,7 +349,7 @@ def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
             latex += ' '
 
     if outer_line:
-        return latex.strip(), is_multiline
+        return latex.strip(), is_multiline, has_custom_tag
     else:
         return latex.strip()
 
@@ -419,7 +421,7 @@ def parse_matrix( block ):
     return '\\begin{{array}}{{{}}}{}\\end{{array}}'.format( ''.join( alignment ), latex_elements )
 
 
-def parse( block, *, break_line_on_dots = True, equation_label_prefix = '' ):
+def parse( block, *, break_line_on_dots = True, equation_label_prefix = '', starred_custom_tag = False ):
 
     if not isinstance( block, Block ):
         block = Block( block )
@@ -450,12 +452,15 @@ def parse( block, *, break_line_on_dots = True, equation_label_prefix = '' ):
     assert len( row_groups ) > 0
 
     is_multiline = False
+    has_custom_tag = False
     latex_groups = []
     for i, row_group in enumerate( row_groups ):
-        latex, row_is_multiline = parse_sub( row_group, outer_line = True, equation_label_prefix = equation_label_prefix )
+        latex, row_is_multiline, row_has_custom_tag = parse_sub( row_group, outer_line = True, equation_label_prefix = equation_label_prefix )
         latex = latex.strip()
         if row_is_multiline:
             is_multiline = True
+        if row_has_custom_tag:
+            has_custom_tag = True
         if i + 1 < len( row_groups ):
             assert latex.endswith( '...' )
             latex = latex[:-3]
@@ -468,9 +473,9 @@ def parse( block, *, break_line_on_dots = True, equation_label_prefix = '' ):
         latex_groups.append( latex )
 
     if not is_multiline:
-        return '\\begin{{equation}}{}\\end{{equation}}'.format( ''.join( latex_groups ) )
+        return '\\begin{{equation{0}}}{1}\\end{{equation{0}}}'.format( '*' if has_custom_tag and starred_custom_tag else '', '\n'.join( latex_groups ) )
     else:
-        return '\\begin{{multline}}{}\\end{{multline}}'.format( '\n'.join( latex_groups ) )
+        return '\\begin{{multline{0}}}{1}\\end{{multline{0}}}'.format( '*' if has_custom_tag and starred_custom_tag else '', '\n'.join( latex_groups ) )
 
 
 def test():
@@ -480,7 +485,7 @@ def test():
         for line in lines:
             print( '>>>', line )
         print()
-        print( '<<<', parse( lines, break_line_on_dots = False ) )
+        print( '<<<', parse( lines, break_line_on_dots = False, starred_custom_tag = True ) )
         print()
 
     _parse( r'''
