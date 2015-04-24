@@ -110,7 +110,7 @@ def _determine_fraction_length( line ):
     return line.shape[1]
 
 
-def parse_sub( block ):
+def parse_sub( block, outer_line = False ):
 
     if not isinstance( block, Block ):
         block = Block( block )
@@ -118,6 +118,7 @@ def parse_sub( block ):
     latex = ''
     baseline = None
     fraction_symbols = ( '-', '―' )
+    is_multiline = False
 
     # skip white columns
 
@@ -216,6 +217,15 @@ def parse_sub( block ):
 
             if block[baseline,0] == ' ':
                 raise ValueError( 'unexpected symbol, not on baseline' )
+
+        if proceed and outer_line == True:
+
+            if block[baseline,0:2].as_string() == '\\\\' and set( block[:,0:2] ) <= set( ' \\' ):
+                is_multiline = True
+                proceed = False
+                check_limits = False
+                latex += '\\\\'
+                block = block[:,2:]
 
         if proceed:
 
@@ -336,7 +346,10 @@ def parse_sub( block ):
             block = block[:,1:]
             latex += ' '
 
-    return latex.strip()
+    if outer_line:
+        return latex.strip(), is_multiline
+    else:
+        return latex.strip()
 
 
 def parse_matrix( block ):
@@ -406,13 +419,12 @@ def parse_matrix( block ):
     return '\\begin{{array}}{{{}}}{}\\end{{array}}'.format( ''.join( alignment ), latex_elements )
 
 
-def parse( block ):
+def parse( block, *, break_line_on_dots = True ):
 
     if not isinstance( block, Block ):
         block = Block( block )
 
     row_groups = []
-    latex_groups = []
 
     # find row groups separated by two white rows
 
@@ -437,26 +449,28 @@ def parse( block ):
 
     assert len( row_groups ) > 0
 
-    if len( row_groups ) == 1:
-        type = 'single'
-    else:
-        type = 'multiline'
+    is_multiline = False
+    latex_groups = []
     for i, row_group in enumerate( row_groups ):
-        latex = parse_sub( row_group ).strip()
+        latex, row_is_multiline = parse_sub( row_group, outer_line = True )
+        latex = latex.strip()
+        if row_is_multiline:
+            is_multiline = True
         if i + 1 < len( row_groups ):
             assert latex.endswith( '...' )
             latex = latex[:-3]
+            if break_line_on_dots:
+                latex += '\\\\'
+                is_multiline = True
         if i > 0:
             assert latex.startswith( '...' )
             latex = latex[3:]
         latex_groups.append( latex )
 
-    if type == 'single':
-        return '\\begin{{equation}}{}\\end{{equation}}'.format( latex_groups[0] )
-    elif type == 'multiline':
-        return '\\begin{{multline}}{}\\end{{multline}}'.format( '\\\\'.join( latex_groups ) )
+    if not is_multiline:
+        return '\\begin{{equation}}{}\\end{{equation}}'.format( ''.join( latex_groups ) )
     else:
-        raise ValueError( 'unknown type: {!r}'.format( type ) )
+        return '\\begin{{multline}}{}\\end{{multline}}'.format( '\n'.join( latex_groups ) )
 
 
 def test():
@@ -466,7 +480,7 @@ def test():
         for line in lines:
             print( '>>>', line )
         print()
-        print( '<<<', parse( lines ) )
+        print( '<<<', parse( lines, break_line_on_dots = False ) )
         print()
 
     _parse( r'''
