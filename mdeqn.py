@@ -110,7 +110,7 @@ def _determine_fraction_length( line ):
     return line.shape[1]
 
 
-def parse_sub( block, outer_line = False ):
+def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
 
     if not isinstance( block, Block ):
         block = Block( block )
@@ -249,7 +249,7 @@ def parse_sub( block, outer_line = False ):
                 if tag:
                     latex += '\\tag{{{}}}'.format( tag )
                 if label:
-                    latex += '\\label{{{}}}'.format( label )
+                    latex += '\\label{{{}{}}}'.format( equation_label_prefix, label )
                 block = block[:,block.shape[1]:]
                 proceed = False
                 break
@@ -419,7 +419,7 @@ def parse_matrix( block ):
     return '\\begin{{array}}{{{}}}{}\\end{{array}}'.format( ''.join( alignment ), latex_elements )
 
 
-def parse( block, *, break_line_on_dots = True ):
+def parse( block, *, break_line_on_dots = True, equation_label_prefix = '' ):
 
     if not isinstance( block, Block ):
         block = Block( block )
@@ -452,7 +452,7 @@ def parse( block, *, break_line_on_dots = True ):
     is_multiline = False
     latex_groups = []
     for i, row_group in enumerate( row_groups ):
-        latex, row_is_multiline = parse_sub( row_group, outer_line = True )
+        latex, row_is_multiline = parse_sub( row_group, outer_line = True, equation_label_prefix = equation_label_prefix )
         latex = latex.strip()
         if row_is_multiline:
             is_multiline = True
