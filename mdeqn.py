@@ -110,7 +110,7 @@ def _determine_fraction_length( line ):
     return line.shape[1]
 
 
-def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
+def parse_sub( block, *, outer_line = False, equation_label_prefix = '', display_style_in_array ):
 
     if not isinstance( block, Block ):
         block = Block( block )
@@ -146,7 +146,7 @@ def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
             if start < block.shape[0] and not block[start:,:].is_empty():
                 raise ValueError( 'space below last substack entry should be empty' )
 
-            latex = '\\substack{{{}}}'.format( '\\\\'.join( parse_sub( block[ row, 1: ] ) for row in rows ) )
+            latex = '\\substack{{{}}}'.format( '\\\\'.join( parse_sub( block[ row, 1: ], display_style_in_array = display_style_in_array ) for row in rows ) )
             proceed = False
             check_limits = False
             block = block[block.shape[0]:,:]
@@ -171,7 +171,7 @@ def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
                 else:
                     raise ValueError( 'expected closing vertical line' )
 
-                latex_matrix = parse_matrix( block[vert_top:vert_bottom,1:j] )
+                latex_matrix = parse_matrix( block[vert_top:vert_bottom,1:j], display_style_in_array = display_style_in_array )
                 if ch_left in ( '{', '}' ):
                     ch_left = '\\' + ch_left
                 if ch_right in ( '{', '}' ):
@@ -285,8 +285,8 @@ def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
                     ):
                 # fraction
                 fraction_length = _determine_fraction_length( block[baseline,:] )
-                numerator = parse_sub( block[:baseline,:fraction_length] )
-                denominator = parse_sub( block[baseline+1:,:fraction_length] )
+                numerator = parse_sub( block[:baseline,:fraction_length], display_style_in_array = display_style_in_array )
+                denominator = parse_sub( block[baseline+1:,:fraction_length], display_style_in_array = display_style_in_array )
                 latex += '\\frac{{{}}}{{{}}}'.format( numerator, denominator )
                 block = block[:,fraction_length:]
                 check_limits = False
@@ -336,10 +336,10 @@ def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
             if i > 0:
                 superscript = block[:limit_top,:i]
                 if not superscript.is_empty():
-                    latex += '^{{{}}}'.format( parse_sub( superscript ) )
+                    latex += '^{{{}}}'.format( parse_sub( superscript, display_style_in_array = display_style_in_array ) )
                 subscript = block[limit_bottom:,:i]
                 if not subscript.is_empty():
-                    latex += '_{{{}}}'.format( parse_sub( subscript ) )
+                    latex += '_{{{}}}'.format( parse_sub( subscript, display_style_in_array = display_style_in_array ) )
                 block = block[:,i:]
 
         # remove white columns
@@ -354,7 +354,7 @@ def parse_sub( block, outer_line = False, equation_label_prefix = '' ):
         return latex.strip()
 
 
-def parse_matrix( block ):
+def parse_matrix( block, *, display_style_in_array ):
 
     column_white = 3
     row_white = 1
@@ -402,26 +402,32 @@ def parse_matrix( block ):
         columns.append( slice( start, stop ) )
 
     if len( rows ) == 1 and len( columns ) == 1:
-        return parse_sub( block )
+        return parse_sub( block, display_style_in_array = display_style_in_array )
 
     # If each cell in a column has an `&`, vertically aligned, (on the
     # baseline, but we don't check this yet), use right alignment left of `&`
     # and left alignment right of `&`.  Otherwise use centre alignment.
 
     alignment = []
-    for column in columns:
+    columns, _columns = [], columns
+    for column in _columns:
         for i in range( column.start, column.stop ):
             if '&' in block[:,i] and set( block[:,i] ) <= { '&', ' ' }:
                 alignment.append( 'r@{}l' )
+                columns.extend([ slice( column.start, i ), slice( i+1, column.stop ) ])
                 break
         else:
             alignment.append( 'c' )
+            columns.append( column )
 
-    latex_elements = '\\\\'.join( '&'.join( parse_sub( block[row,column] ) for column in columns ) for row in rows )
+    cell_prefix = ''
+    if display_style_in_array:
+        cell_prefix='\\displaystyle '
+    latex_elements = '\\\\'.join( '&'.join( cell_prefix + parse_sub( block[row,column], display_style_in_array = display_style_in_array ) for column in columns ) for row in rows )
     return '\\begin{{array}}{{{}}}{}\\end{{array}}'.format( ''.join( alignment ), latex_elements )
 
 
-def parse( block, *, break_line_on_dots = True, equation_label_prefix = '', starred_custom_tag = False ):
+def parse( block, *, break_line_on_dots = True, equation_label_prefix = '', starred_custom_tag = False, display_style_in_array = False ):
 
     if not isinstance( block, Block ):
         block = Block( block )
@@ -455,7 +461,7 @@ def parse( block, *, break_line_on_dots = True, equation_label_prefix = '', star
     has_custom_tag = False
     latex_groups = []
     for i, row_group in enumerate( row_groups ):
-        latex, row_is_multiline, row_has_custom_tag = parse_sub( row_group, outer_line = True, equation_label_prefix = equation_label_prefix )
+        latex, row_is_multiline, row_has_custom_tag = parse_sub( row_group, outer_line = True, equation_label_prefix = equation_label_prefix, display_style_in_array = display_style_in_array )
         latex = latex.strip()
         if row_is_multiline:
             is_multiline = True
