@@ -526,6 +526,8 @@ else:
                 equation_label_prefix=['', 'prefix for equation labels'],
                 starred_custom_tag=
                     [False, 'use equation* if a custom tag is given'],
+                display_style_in_array=
+                    [False, 'use display style in arrays'],
             )
             super().__init__(**kwargs)
 
