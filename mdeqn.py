@@ -478,6 +478,63 @@ def parse( block, *, break_line_on_dots = True, equation_label_prefix = '', star
         return '\\begin{{multline{0}}}{1}\\end{{multline{0}}}'.format( '*' if has_custom_tag and starred_custom_tag else '', '\n'.join( latex_groups ) )
 
 
+try:
+    import markdown
+except ImportError:
+    pass
+else:
+
+    class InlineMath(markdown.inlinepatterns.Pattern):
+
+        def __init__(self, *args, **kwargs):
+
+            super().__init__(r'(\$)([^\$]+)\2', *args, **kwargs)
+
+        def handleMatch(self, m):
+
+            el = markdown.util.etree.Element('script', dict(type='math/tex'))
+            el.text = markdown.util.AtomicString(m.group(3))
+            return el
+
+
+    class DisplayMath(markdown.inlinepatterns.Pattern):
+
+        def __init__(self, parse_kwargs, *args, **kwargs):
+
+            self.parse_kwargs = parse_kwargs
+            super().__init__(r'(\s*\${2})\n([^\$]+)\n\2', *args, **kwargs)
+
+        def handleMatch(self, m):
+
+            el = markdown.util.etree.Element(
+                'script', dict(type='math/tex; mode=display'))
+            el.text = markdown.util.AtomicString(
+                parse(m.group(3).split('\n'), **self.parse_kwargs))
+            return el
+
+
+    class MarkdownExtension(markdown.Extension):
+
+        def __init__(self, **kwargs):
+            self.config = dict(
+                equation_label_prefix=['', 'prefix for equation labels'],
+                starred_custom_tag=
+                    [False, 'use equation* if a custom tag is given'],
+            )
+            super().__init__(**kwargs)
+
+        def extendMarkdown(self, md, md_globals):
+
+            md.inlinePatterns.add(
+                'displaymath', DisplayMath(self.getConfigs(), md), '<escape')
+            md.inlinePatterns.add('inlinemath', InlineMath(md), '<escape')
+
+
+    def makeExtension(configs=[]):
+
+        return MarkdownExtension(configs)
+
+
 def test():
 
     def _parse( lines ):

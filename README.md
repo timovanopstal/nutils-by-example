@@ -258,3 +258,66 @@ display equations marked as follows:
 
 To use this filter, add the option `--filter=/path/to/mdeqn/pandoc-filter` to
 the pandoc command line.
+
+python-markdown
+---------------
+
+Mdeqn includes a [python-markdown] extension for converting inline math
+(latex-style) between single dollars and mdeqn-style equations between double
+dollars, e.g.
+
+    Weak form of Laplace's equation with basis $φ_i$:
+    $$
+        ∫  φ    φ    u  dΩ = 0
+         Ω  i,k  j,k  j
+    $$
+
+to latex-style equations in a `script` tag, suitable for rendering by [mathjax].
+
+The following example converts above markdown snippet to html using
+[python-markdown]:
+
+    import mdeqn
+    import markdown
+    md = markdown.Markdown(
+        output_format='xhtml5', extensions=[mdeqn.MarkdownExtension()])
+
+    html_body = md.convert('''
+    Weak form of Laplace's equation with basis $φ_i$:
+    $$
+        ∫  φ    φ    u  dΩ = 0
+         Ω  i,k  j,k  j
+    $$
+    ''')
+
+    html_head = '''\
+    <!doctype html>
+    <html>
+      <head>
+        <meta charset='utf-8'/>
+        <script src='https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js'>
+        </script>
+        <script>
+          MathJax.Hub.Config({
+            jax: ['input/TeX','output/CommonHTML'],
+            TeX: {
+              extensions: [
+                'AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'],
+              equationNumbers: {autoNumber: "AMS"}
+            }
+          });
+        </script>
+        <title>example</title>
+      </head>
+      <body>
+    '''
+
+    html_tail = '''\
+      </body>
+    </html>
+    '''
+
+    print(html_head + html_body + html_tail)
+
+[python-markdown]: https://pythonhosted.org/Markdown/
+[mathjax]: https://www.mathjax.org/
