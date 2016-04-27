@@ -1,0 +1,55 @@
+#! /usr/bin/env python3
+#
+# Copyright (c) 2014 Joost van Zwieten
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+from mdeqn import *
+
+import subprocess
+import sys
+import re
+import tempfile
+import traceback
+
+if __name__ == '__main__':
+
+    assert len( sys.argv ) > 1
+    jobname = sys.argv[-1]
+    if jobname.endswith( '.tex' ):
+        jobname = jobname[:-4]
+
+    with open( jobname + '.tex' ) as doc:
+        doc = doc.read()
+
+    def parse_mdeqn( match ):
+
+        lines = match.group(1).split( '\n' )
+        try:
+            return '%\n' * match.group(1).count( '\n' ) + parse( lines )
+        except:
+            traceback.print_exc()
+            return '\\begin{{verbatim}}{}\\end{{verbatim}}'.format( match.group( 1 ) )
+
+    doc, n = re.subn( r'\\begin\{mdeqn\}(.*?)\\end\{mdeqn\}', parse_mdeqn, doc, flags = re.DOTALL )
+
+    with tempfile.NamedTemporaryFile( mode = 'w', encoding = 'utf8' ) as output:
+        output.write( doc )
+        output.file.flush()
+        subprocess.call( ( 'lualatex', '-jobname', jobname ) + tuple( sys.argv[1:-1] ) + ( output.name, ) )
