@@ -1,0 +1,119 @@
+body {
+  max-width: 80ex;
+  font-family: 'PT Serif', serif;
+  margin: 1em 2em;
+  font-size: 12pt;
+}
+p {
+  hyphens: auto;
+  text-align: justify;
+}
+p.title {
+  font-size: 200%;
+  font-family: 'PT Serif Caption', serif;
+  text-align: center;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+h1 {
+  font-size: 150%;
+  font-family: 'PT Serif Caption', serif;
+  font-weight: inherit;
+  page-break-after: avoid;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+h2 {
+  font-size: 125%;
+  font-family: 'PT Serif Caption', serif;
+  font-weight: inherit;
+  page-break-after: avoid;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+img, video {
+  display: block;
+  width: 100%;
+  max-width: 70ex;
+  margin: 1ex auto;
+}
+pre, code, .highlight .filename {
+  font-family: 'PT Mono', monospace;
+  font-size: 80%;
+}
+blockquote {
+  padding: 0px;
+  margin: 1em 0px;
+  border-left: 1ex solid #ccc;
+  padding-left: 1em;
+}
+code {
+  border-bottom: 1pt solid #ac9;
+  hyphens: none;
+}
+.highlight {
+  overflow: auto;
+  margin: 0px;
+  padding: 1ex 1ex;
+  border-radius: 2pt;
+  background: #eee;
+  border: 1pt solid #ccc;
+  page-break-inside: avoid;
+}
+.highlight.python {
+  background: #efc;
+  border-color: #ac9;
+}
+.highlight pre {
+  padding: 0px;
+  margin: 0px;
+}
+.highlight.linenos .filename {
+  color: #888;
+}
+.highlight.linenos pre {
+  border-left: 1pt solid #ac9;
+  margin-left: 5ex;
+  padding-left: 1ex;
+}
+.highlight.linenos .lineno {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #888;
+  display: inline-block;
+  width: 3ex;
+  float: left;
+  margin-left: -5ex;
+  text-align: right;
+  padding: 0px;
+}
+
+@media print {
+  @page {
+    margin: 2cm;
+  }
+  body {
+    margin: 0px auto;
+    font-size: 10pt;
+    max-width: 12cm;
+  }
+  a, a:visited {
+    color: inherit;
+    text-decoration: inherit;
+  }
+  p {
+    hyphens: auto;
+    text-align: justify;
+  }
+  .highlight {
+    overflow: visible;
+  }
+  img, video {
+    width: 50%;
+  }
+}
+
+/* vim: sts=2:sw=2:et
+ */

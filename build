@@ -1,0 +1,194 @@
+#! /usr/bin/env python3
+
+import sys
+import os
+sys.path.insert(0, os.path.join('third-party', 'mdeqn'))
+
+import mdeqn
+import markdown
+import sys
+import html
+import re
+import subprocess
+import pygments.lexers
+import pygments.formatters
+import html
+
+
+class PygmentsTreeprocessor(markdown.treeprocessors.Treeprocessor):
+
+    def run(self, root):
+
+        for block in root.iter('pre'):
+            if len(block) != 1 or block[0].tag != 'code':
+                continue
+            highlighted = \
+                self.parse_include(block[0].text) or \
+                self.parse_regular(block[0].text)
+            block.clear()
+            block.tag = 'p'
+            block.text = self.markdown.htmlStash.store(highlighted, safe=True)
+
+    def parse_include(self, text):
+
+        m = re.match(r'^@include (.*?)(\[.*\])?$', text.strip())
+        if not m:
+            return
+
+        filename = m.group(1)
+        s = m.group(2)
+        if s:
+            s = s[1:-1]
+            if ':' in s:
+                s = list(s.split(':', 1))
+                s = slice(int(s[0]) if s[0] else 0, int(s[1]) if s[1] else None)
+            else:
+                s = int(s)
+        else:
+            s = slice(None)
+
+        with open(filename) as f:
+            f = tuple(f)
+            n = range(len(f))[s]
+            f = f[s]
+
+        highlighted = pygments.highlight(
+            ''.join(f),
+            pygments.lexers.get_lexer_for_filename(filename),
+            pygments.formatters.HtmlFormatter(
+                linenos='inline',
+                linenostart=n[0]+1,
+                cssclass='highlight python linenos',
+            ),
+        )
+        start_tag = '<div class="highlight python linenos">'
+        assert highlighted.startswith(start_tag)
+        highlighted = (
+            start_tag
+            + '<span class="filename">file: <a href="{0}" download>{0}</a></span>'
+                .format(html.escape(filename))
+            + highlighted[len(start_tag):]
+        )
+        return highlighted
+
+
+    def parse_regular(self, src):
+
+        language = 'python'
+
+        if src.startswith(':::'):
+            language, src = src.split('\n', 1)
+            language = language[3:].strip()
+
+        return pygments.highlight(
+            src,
+            pygments.lexers.get_lexer_by_name(language),
+            pygments.formatters.HtmlFormatter(
+                cssclass='highlight ' + language,
+            ),
+        )
+
+
+class PygmentsExtension(markdown.extensions.Extension):
+
+    def extendMarkdown(self, md, md_globals):
+        md.treeprocessors.add('pygments', PygmentsTreeprocessor(md), '<inline')
+
+
+md = markdown.Markdown(
+    output_format='xhtml5',
+    extensions=[
+        PygmentsExtension(),
+        mdeqn.MarkdownExtension(display_style_in_array=True),
+        'markdown.extensions.meta'],
+)
+
+HTML_HEADER = '''\
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'/>
+    <meta charset='utf-8'/>
+    <title>{title}</title>
+    <script src='https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js'></script>
+    <script>
+      MathJax.Hub.Config({{
+        jax: ['input/TeX','output/CommonHTML'],
+        TeX: {{
+          extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'],
+          equationNumbers: {{autoNumber: "AMS"}}
+        }}
+      }});
+    </script>
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif+Caption' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption' rel='stylesheet' type='text/css'/>
+    <link href='pygments.css' rel='stylesheet' type='text/css'/>
+    <link href='style.css' rel='stylesheet' type='text/css'/>
+  </head>
+  <body>
+    <p class='title'>{title}</p>
+'''
+HTML_FOOTER = '''\
+  </body>
+</html>
+'''
+
+if __name__ == '__main__':
+
+    import sys
+    import subprocess
+    import shutil
+
+    all_scripts = (
+        'laplace_dirichlet.py', 'laplace_mixed.py',
+        'laplace_mixed_circle.py', 'linear_elasticity.py',
+        'linear_elasticity_with_hole.py',
+        'heat.py',
+    )
+    if tuple(sys.argv[1:]) == ('all',):
+        scripts = all_scripts
+    else:
+        scripts = tuple(sys.argv[1:])
+        assert set(scripts) <= set(all_scripts)
+
+    movies = {
+        'heat.py': 'temperature',
+    }
+    for script in scripts:
+        shutil.rmtree(os.path.join('logs', script), ignore_errors=True)
+        subprocess.run(
+            ['python3', script, '--outdir=' + os.path.join('logs', script)],
+            check=True)
+        if script in movies:
+            for ext in ('mp4', 'webm'):
+                cmdline = [
+                    'ffmpeg', '-f', 'image2', '-i',
+                    os.path.join(
+                        'logs', script, '{}%03d.png'.format(movies[script])),
+                    '-crf', '10', '-b:v', '10M',
+                    '-pix_fmt', 'yuv420p', # for outdated players, apparently
+                    os.path.join(
+                        'logs', script, '{}.{}'.format(movies[script], ext)),
+                ]
+                subprocess.run(cmdline, check=True)
+        subprocess.run([
+            'sed', '-i',
+            r's/' + r'\.\.\/' * 5 + r'\(viewer\.js\|style\.css\)/..\/\1/',
+            os.path.join('logs', script, 'log.html')], check=True)
+
+    with open('presentation.md') as f:
+        html = md.convert(f.read())
+
+    with open('index.html', 'w') as f:
+        print(HTML_HEADER.format(title=md.Meta['title'][0]), end='', file=f)
+        print(html, file=f)
+        print(HTML_FOOTER, end='', file=f)
+
+    with open('pygments.css', 'w') as f:
+        f.write(
+            pygments.formatters.HtmlFormatter().get_style_defs('.highlight'))
+
+# vim: sts=4:sw=4:et
