@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html><head>
+<title>heat.py 2016/04/28 01:15:36</title>
+<script type="text/javascript" src="../viewer.js" ></script>
+<link rel="stylesheet" type="text/css" href="../style.css">
+<link rel="stylesheet" type="text/css" href="../../../../../custom.css">
+</head><body><pre>
+<span id="navbar">goto: <a class="nav_latest" href="../../../../log.html?1461798936">latest heat.py</a> | <a class="nav_latestall" href="../../../../../log.html?1461798936">latest overall</a> | <a class="nav_index" href="../../../../../">index</a></span>
+<span class="info">
+heat.py main
+  --alpha=0.01
+  --nelems=64
+  --degree=2
+  --dt=0.01
+  --tend=1
+
+start Thu Apr 28 01:15:36 2016
+
+</span>
+<span class="line">integrate &middot; <span class="debug">integrating 1+1 distinct blocks</span></span>
+<span class="line">integrate &middot; <span class="debug">cache effectivity 99% (hit 20460/20480 calls over 11 functions)</span></span>
+<span class="line">integrate &middot; <span class="debug">assembled ScipyMatrix(4356,4356)</span></span>
+<span class="line">integrate &middot; <span class="debug">assembled ScipyMatrix(4356,4356)</span></span>
+<span class="line">project &middot; <span class="debug">projection type: lsqr</span></span>
+<span class="line">project &middot; building system &middot; <span class="debug">integrating 1+0+0+1 distinct blocks</span></span>
+<span class="line">project &middot; building system &middot; <span class="debug">cache effectivity 97% (hit 751/768 calls over 13 functions)</span></span>
+<span class="line">project &middot; building system &middot; <span class="debug">assembled ScipyMatrix(4356,4356)</span></span>
+<span class="line">project &middot; building system &middot; <span class="debug">assembled ndarray(4356)</span></span>
+<span class="line">project &middot; building system &middot; <span class="debug">assembled float64()</span></span>
+<span class="line">project &middot; building system &middot; <span class="debug">assembled float64()</span></span>
+<span class="line">project &middot; <span class="info">constrained 260/4356 dofs, error 0.00e+00/area</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; <span class="debug">projection type: lsqr</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; building system &middot; <span class="debug">integrating 1+1+1+1 distinct blocks</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; building system &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; building system &middot; <span class="debug">assembled ScipyMatrix(4356,4356)</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; building system &middot; <span class="debug">assembled ndarray(4356)</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; building system &middot; <span class="debug">assembled float64()</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; building system &middot; <span class="debug">assembled float64()</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 0/101 (0%) &middot; project &middot; <span class="info">constrained 4356/4356 dofs, error 1.39e-03/area</span></span>
+<span class="line">timestep 0/101 (0%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 0/101 (0%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 0/101 (0%) &middot; <span class="warning">PendingDeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+  In /usr/lib/python3/dist-packages/matplotlib/externals/six.py:80</span></span>
+<span class="line">timestep 0/101 (0%) &middot; <span class="path"><a href="temperature000.png" name="temperature000.png" class="plot">temperature000.png</a></span></span>
+<span class="line">timestep 1/101 (0%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 1/101 (0%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 1/101 (0%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 1/101 (0%) &middot; <span class="path"><a href="temperature001.png" name="temperature001.png" class="plot">temperature001.png</a></span></span>
+<span class="line">timestep 2/101 (1%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 2/101 (1%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 2/101 (1%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 2/101 (1%) &middot; <span class="path"><a href="temperature002.png" name="temperature002.png" class="plot">temperature002.png</a></span></span>
+<span class="line">timestep 3/101 (2%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 3/101 (2%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 3/101 (2%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 3/101 (2%) &middot; <span class="path"><a href="temperature003.png" name="temperature003.png" class="plot">temperature003.png</a></span></span>
+<span class="line">timestep 4/101 (3%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 4/101 (3%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 4/101 (3%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 4/101 (3%) &middot; <span class="path"><a href="temperature004.png" name="temperature004.png" class="plot">temperature004.png</a></span></span>
+<span class="line">timestep 5/101 (4%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 5/101 (4%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 5/101 (4%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 5/101 (4%) &middot; <span class="path"><a href="temperature005.png" name="temperature005.png" class="plot">temperature005.png</a></span></span>
+<span class="line">timestep 6/101 (5%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 6/101 (5%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 6/101 (5%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 6/101 (5%) &middot; <span class="path"><a href="temperature006.png" name="temperature006.png" class="plot">temperature006.png</a></span></span>
+<span class="line">timestep 7/101 (6%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 7/101 (6%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 7/101 (6%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 7/101 (6%) &middot; <span class="path"><a href="temperature007.png" name="temperature007.png" class="plot">temperature007.png</a></span></span>
+<span class="line">timestep 8/101 (7%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 8/101 (7%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 8/101 (7%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 8/101 (7%) &middot; <span class="path"><a href="temperature008.png" name="temperature008.png" class="plot">temperature008.png</a></span></span>
+<span class="line">timestep 9/101 (8%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 9/101 (8%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 9/101 (8%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 9/101 (8%) &middot; <span class="path"><a href="temperature009.png" name="temperature009.png" class="plot">temperature009.png</a></span></span>
+<span class="line">timestep 10/101 (9%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 10/101 (9%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 10/101 (9%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 10/101 (9%) &middot; <span class="path"><a href="temperature010.png" name="temperature010.png" class="plot">temperature010.png</a></span></span>
+<span class="line">timestep 11/101 (10%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 11/101 (10%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 11/101 (10%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 11/101 (10%) &middot; <span class="path"><a href="temperature011.png" name="temperature011.png" class="plot">temperature011.png</a></span></span>
+<span class="line">timestep 12/101 (11%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 12/101 (11%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 12/101 (11%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 12/101 (11%) &middot; <span class="path"><a href="temperature012.png" name="temperature012.png" class="plot">temperature012.png</a></span></span>
+<span class="line">timestep 13/101 (12%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 13/101 (12%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 13/101 (12%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 13/101 (12%) &middot; <span class="path"><a href="temperature013.png" name="temperature013.png" class="plot">temperature013.png</a></span></span>
+<span class="line">timestep 14/101 (13%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 14/101 (13%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 14/101 (13%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 14/101 (13%) &middot; <span class="path"><a href="temperature014.png" name="temperature014.png" class="plot">temperature014.png</a></span></span>
+<span class="line">timestep 15/101 (14%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 15/101 (14%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 15/101 (14%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 15/101 (14%) &middot; <span class="path"><a href="temperature015.png" name="temperature015.png" class="plot">temperature015.png</a></span></span>
+<span class="line">timestep 16/101 (15%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 16/101 (15%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 16/101 (15%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 16/101 (15%) &middot; <span class="path"><a href="temperature016.png" name="temperature016.png" class="plot">temperature016.png</a></span></span>
+<span class="line">timestep 17/101 (16%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 17/101 (16%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 17/101 (16%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 17/101 (16%) &middot; <span class="path"><a href="temperature017.png" name="temperature017.png" class="plot">temperature017.png</a></span></span>
+<span class="line">timestep 18/101 (17%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 18/101 (17%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 18/101 (17%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 18/101 (17%) &middot; <span class="path"><a href="temperature018.png" name="temperature018.png" class="plot">temperature018.png</a></span></span>
+<span class="line">timestep 19/101 (18%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 19/101 (18%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 19/101 (18%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 19/101 (18%) &middot; <span class="path"><a href="temperature019.png" name="temperature019.png" class="plot">temperature019.png</a></span></span>
+<span class="line">timestep 20/101 (19%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 20/101 (19%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 20/101 (19%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 20/101 (19%) &middot; <span class="path"><a href="temperature020.png" name="temperature020.png" class="plot">temperature020.png</a></span></span>
+<span class="line">timestep 21/101 (20%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 21/101 (20%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 21/101 (20%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 21/101 (20%) &middot; <span class="path"><a href="temperature021.png" name="temperature021.png" class="plot">temperature021.png</a></span></span>
+<span class="line">timestep 22/101 (21%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 22/101 (21%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 22/101 (21%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 22/101 (21%) &middot; <span class="path"><a href="temperature022.png" name="temperature022.png" class="plot">temperature022.png</a></span></span>
+<span class="line">timestep 23/101 (22%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 23/101 (22%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 23/101 (22%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 23/101 (22%) &middot; <span class="path"><a href="temperature023.png" name="temperature023.png" class="plot">temperature023.png</a></span></span>
+<span class="line">timestep 24/101 (23%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 24/101 (23%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 24/101 (23%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 24/101 (23%) &middot; <span class="path"><a href="temperature024.png" name="temperature024.png" class="plot">temperature024.png</a></span></span>
+<span class="line">timestep 25/101 (24%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 25/101 (24%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 25/101 (24%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 25/101 (24%) &middot; <span class="path"><a href="temperature025.png" name="temperature025.png" class="plot">temperature025.png</a></span></span>
+<span class="line">timestep 26/101 (25%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 26/101 (25%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 26/101 (25%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 26/101 (25%) &middot; <span class="path"><a href="temperature026.png" name="temperature026.png" class="plot">temperature026.png</a></span></span>
+<span class="line">timestep 27/101 (26%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 27/101 (26%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 27/101 (26%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 27/101 (26%) &middot; <span class="path"><a href="temperature027.png" name="temperature027.png" class="plot">temperature027.png</a></span></span>
+<span class="line">timestep 28/101 (27%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 28/101 (27%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 28/101 (27%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 28/101 (27%) &middot; <span class="path"><a href="temperature028.png" name="temperature028.png" class="plot">temperature028.png</a></span></span>
+<span class="line">timestep 29/101 (28%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 29/101 (28%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 29/101 (28%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 29/101 (28%) &middot; <span class="path"><a href="temperature029.png" name="temperature029.png" class="plot">temperature029.png</a></span></span>
+<span class="line">timestep 30/101 (29%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 30/101 (29%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 30/101 (29%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 30/101 (29%) &middot; <span class="path"><a href="temperature030.png" name="temperature030.png" class="plot">temperature030.png</a></span></span>
+<span class="line">timestep 31/101 (30%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 31/101 (30%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 31/101 (30%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 31/101 (30%) &middot; <span class="path"><a href="temperature031.png" name="temperature031.png" class="plot">temperature031.png</a></span></span>
+<span class="line">timestep 32/101 (31%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 32/101 (31%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 32/101 (31%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 32/101 (31%) &middot; <span class="path"><a href="temperature032.png" name="temperature032.png" class="plot">temperature032.png</a></span></span>
+<span class="line">timestep 33/101 (32%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 33/101 (32%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 33/101 (32%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 33/101 (32%) &middot; <span class="path"><a href="temperature033.png" name="temperature033.png" class="plot">temperature033.png</a></span></span>
+<span class="line">timestep 34/101 (33%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 34/101 (33%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 34/101 (33%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 34/101 (33%) &middot; <span class="path"><a href="temperature034.png" name="temperature034.png" class="plot">temperature034.png</a></span></span>
+<span class="line">timestep 35/101 (34%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 35/101 (34%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 35/101 (34%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 35/101 (34%) &middot; <span class="path"><a href="temperature035.png" name="temperature035.png" class="plot">temperature035.png</a></span></span>
+<span class="line">timestep 36/101 (35%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 36/101 (35%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 36/101 (35%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 36/101 (35%) &middot; <span class="path"><a href="temperature036.png" name="temperature036.png" class="plot">temperature036.png</a></span></span>
+<span class="line">timestep 37/101 (36%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 37/101 (36%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 37/101 (36%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 37/101 (36%) &middot; <span class="path"><a href="temperature037.png" name="temperature037.png" class="plot">temperature037.png</a></span></span>
+<span class="line">timestep 38/101 (37%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 38/101 (37%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 38/101 (37%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 38/101 (37%) &middot; <span class="path"><a href="temperature038.png" name="temperature038.png" class="plot">temperature038.png</a></span></span>
+<span class="line">timestep 39/101 (38%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 39/101 (38%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 39/101 (38%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 39/101 (38%) &middot; <span class="path"><a href="temperature039.png" name="temperature039.png" class="plot">temperature039.png</a></span></span>
+<span class="line">timestep 40/101 (39%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 40/101 (39%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 40/101 (39%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 40/101 (39%) &middot; <span class="path"><a href="temperature040.png" name="temperature040.png" class="plot">temperature040.png</a></span></span>
+<span class="line">timestep 41/101 (40%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 41/101 (40%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 41/101 (40%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 41/101 (40%) &middot; <span class="path"><a href="temperature041.png" name="temperature041.png" class="plot">temperature041.png</a></span></span>
+<span class="line">timestep 42/101 (41%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 42/101 (41%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 42/101 (41%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 42/101 (41%) &middot; <span class="path"><a href="temperature042.png" name="temperature042.png" class="plot">temperature042.png</a></span></span>
+<span class="line">timestep 43/101 (42%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 43/101 (42%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 43/101 (42%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 43/101 (42%) &middot; <span class="path"><a href="temperature043.png" name="temperature043.png" class="plot">temperature043.png</a></span></span>
+<span class="line">timestep 44/101 (43%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 44/101 (43%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 44/101 (43%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 44/101 (43%) &middot; <span class="path"><a href="temperature044.png" name="temperature044.png" class="plot">temperature044.png</a></span></span>
+<span class="line">timestep 45/101 (44%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 45/101 (44%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 45/101 (44%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 45/101 (44%) &middot; <span class="path"><a href="temperature045.png" name="temperature045.png" class="plot">temperature045.png</a></span></span>
+<span class="line">timestep 46/101 (45%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 46/101 (45%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 46/101 (45%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 46/101 (45%) &middot; <span class="path"><a href="temperature046.png" name="temperature046.png" class="plot">temperature046.png</a></span></span>
+<span class="line">timestep 47/101 (46%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 47/101 (46%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 47/101 (46%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 47/101 (46%) &middot; <span class="path"><a href="temperature047.png" name="temperature047.png" class="plot">temperature047.png</a></span></span>
+<span class="line">timestep 48/101 (47%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 48/101 (47%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 48/101 (47%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 48/101 (47%) &middot; <span class="path"><a href="temperature048.png" name="temperature048.png" class="plot">temperature048.png</a></span></span>
+<span class="line">timestep 49/101 (48%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 49/101 (48%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 49/101 (48%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 49/101 (48%) &middot; <span class="path"><a href="temperature049.png" name="temperature049.png" class="plot">temperature049.png</a></span></span>
+<span class="line">timestep 50/101 (49%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 50/101 (49%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 50/101 (49%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 50/101 (49%) &middot; <span class="path"><a href="temperature050.png" name="temperature050.png" class="plot">temperature050.png</a></span></span>
+<span class="line">timestep 51/101 (50%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 51/101 (50%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 51/101 (50%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 51/101 (50%) &middot; <span class="path"><a href="temperature051.png" name="temperature051.png" class="plot">temperature051.png</a></span></span>
+<span class="line">timestep 52/101 (50%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 52/101 (50%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 52/101 (50%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 52/101 (50%) &middot; <span class="path"><a href="temperature052.png" name="temperature052.png" class="plot">temperature052.png</a></span></span>
+<span class="line">timestep 53/101 (51%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 53/101 (51%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 53/101 (51%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 53/101 (51%) &middot; <span class="path"><a href="temperature053.png" name="temperature053.png" class="plot">temperature053.png</a></span></span>
+<span class="line">timestep 54/101 (52%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 54/101 (52%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 54/101 (52%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 54/101 (52%) &middot; <span class="path"><a href="temperature054.png" name="temperature054.png" class="plot">temperature054.png</a></span></span>
+<span class="line">timestep 55/101 (53%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 55/101 (53%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 55/101 (53%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 55/101 (53%) &middot; <span class="path"><a href="temperature055.png" name="temperature055.png" class="plot">temperature055.png</a></span></span>
+<span class="line">timestep 56/101 (54%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 56/101 (54%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 56/101 (54%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 56/101 (54%) &middot; <span class="path"><a href="temperature056.png" name="temperature056.png" class="plot">temperature056.png</a></span></span>
+<span class="line">timestep 57/101 (55%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 57/101 (55%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 57/101 (55%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 57/101 (55%) &middot; <span class="path"><a href="temperature057.png" name="temperature057.png" class="plot">temperature057.png</a></span></span>
+<span class="line">timestep 58/101 (56%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 58/101 (56%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 58/101 (56%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 58/101 (56%) &middot; <span class="path"><a href="temperature058.png" name="temperature058.png" class="plot">temperature058.png</a></span></span>
+<span class="line">timestep 59/101 (57%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 59/101 (57%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 59/101 (57%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 59/101 (57%) &middot; <span class="path"><a href="temperature059.png" name="temperature059.png" class="plot">temperature059.png</a></span></span>
+<span class="line">timestep 60/101 (58%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 60/101 (58%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 60/101 (58%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 60/101 (58%) &middot; <span class="path"><a href="temperature060.png" name="temperature060.png" class="plot">temperature060.png</a></span></span>
+<span class="line">timestep 61/101 (59%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 61/101 (59%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 61/101 (59%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 61/101 (59%) &middot; <span class="path"><a href="temperature061.png" name="temperature061.png" class="plot">temperature061.png</a></span></span>
+<span class="line">timestep 62/101 (60%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 62/101 (60%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 62/101 (60%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 62/101 (60%) &middot; <span class="path"><a href="temperature062.png" name="temperature062.png" class="plot">temperature062.png</a></span></span>
+<span class="line">timestep 63/101 (61%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 63/101 (61%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 63/101 (61%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 63/101 (61%) &middot; <span class="path"><a href="temperature063.png" name="temperature063.png" class="plot">temperature063.png</a></span></span>
+<span class="line">timestep 64/101 (62%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 64/101 (62%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 64/101 (62%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 64/101 (62%) &middot; <span class="path"><a href="temperature064.png" name="temperature064.png" class="plot">temperature064.png</a></span></span>
+<span class="line">timestep 65/101 (63%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 65/101 (63%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 65/101 (63%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 65/101 (63%) &middot; <span class="path"><a href="temperature065.png" name="temperature065.png" class="plot">temperature065.png</a></span></span>
+<span class="line">timestep 66/101 (64%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 66/101 (64%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 66/101 (64%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 66/101 (64%) &middot; <span class="path"><a href="temperature066.png" name="temperature066.png" class="plot">temperature066.png</a></span></span>
+<span class="line">timestep 67/101 (65%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 67/101 (65%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 67/101 (65%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 67/101 (65%) &middot; <span class="path"><a href="temperature067.png" name="temperature067.png" class="plot">temperature067.png</a></span></span>
+<span class="line">timestep 68/101 (66%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 68/101 (66%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 68/101 (66%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 68/101 (66%) &middot; <span class="path"><a href="temperature068.png" name="temperature068.png" class="plot">temperature068.png</a></span></span>
+<span class="line">timestep 69/101 (67%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 69/101 (67%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 69/101 (67%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 69/101 (67%) &middot; <span class="path"><a href="temperature069.png" name="temperature069.png" class="plot">temperature069.png</a></span></span>
+<span class="line">timestep 70/101 (68%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 70/101 (68%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 70/101 (68%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 70/101 (68%) &middot; <span class="path"><a href="temperature070.png" name="temperature070.png" class="plot">temperature070.png</a></span></span>
+<span class="line">timestep 71/101 (69%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 71/101 (69%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 71/101 (69%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 71/101 (69%) &middot; <span class="path"><a href="temperature071.png" name="temperature071.png" class="plot">temperature071.png</a></span></span>
+<span class="line">timestep 72/101 (70%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 72/101 (70%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 72/101 (70%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 72/101 (70%) &middot; <span class="path"><a href="temperature072.png" name="temperature072.png" class="plot">temperature072.png</a></span></span>
+<span class="line">timestep 73/101 (71%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 73/101 (71%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 73/101 (71%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 73/101 (71%) &middot; <span class="path"><a href="temperature073.png" name="temperature073.png" class="plot">temperature073.png</a></span></span>
+<span class="line">timestep 74/101 (72%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 74/101 (72%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 74/101 (72%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 74/101 (72%) &middot; <span class="path"><a href="temperature074.png" name="temperature074.png" class="plot">temperature074.png</a></span></span>
+<span class="line">timestep 75/101 (73%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 75/101 (73%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 75/101 (73%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 75/101 (73%) &middot; <span class="path"><a href="temperature075.png" name="temperature075.png" class="plot">temperature075.png</a></span></span>
+<span class="line">timestep 76/101 (74%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 76/101 (74%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 76/101 (74%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 76/101 (74%) &middot; <span class="path"><a href="temperature076.png" name="temperature076.png" class="plot">temperature076.png</a></span></span>
+<span class="line">timestep 77/101 (75%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 77/101 (75%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 77/101 (75%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 77/101 (75%) &middot; <span class="path"><a href="temperature077.png" name="temperature077.png" class="plot">temperature077.png</a></span></span>
+<span class="line">timestep 78/101 (76%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 78/101 (76%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 78/101 (76%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 78/101 (76%) &middot; <span class="path"><a href="temperature078.png" name="temperature078.png" class="plot">temperature078.png</a></span></span>
+<span class="line">timestep 79/101 (77%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 79/101 (77%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 79/101 (77%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 79/101 (77%) &middot; <span class="path"><a href="temperature079.png" name="temperature079.png" class="plot">temperature079.png</a></span></span>
+<span class="line">timestep 80/101 (78%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 80/101 (78%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 80/101 (78%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 80/101 (78%) &middot; <span class="path"><a href="temperature080.png" name="temperature080.png" class="plot">temperature080.png</a></span></span>
+<span class="line">timestep 81/101 (79%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 81/101 (79%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 81/101 (79%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 81/101 (79%) &middot; <span class="path"><a href="temperature081.png" name="temperature081.png" class="plot">temperature081.png</a></span></span>
+<span class="line">timestep 82/101 (80%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 82/101 (80%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 82/101 (80%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 82/101 (80%) &middot; <span class="path"><a href="temperature082.png" name="temperature082.png" class="plot">temperature082.png</a></span></span>
+<span class="line">timestep 83/101 (81%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 83/101 (81%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 83/101 (81%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 83/101 (81%) &middot; <span class="path"><a href="temperature083.png" name="temperature083.png" class="plot">temperature083.png</a></span></span>
+<span class="line">timestep 84/101 (82%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 84/101 (82%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 84/101 (82%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 84/101 (82%) &middot; <span class="path"><a href="temperature084.png" name="temperature084.png" class="plot">temperature084.png</a></span></span>
+<span class="line">timestep 85/101 (83%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 85/101 (83%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 85/101 (83%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 85/101 (83%) &middot; <span class="path"><a href="temperature085.png" name="temperature085.png" class="plot">temperature085.png</a></span></span>
+<span class="line">timestep 86/101 (84%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 86/101 (84%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 86/101 (84%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 86/101 (84%) &middot; <span class="path"><a href="temperature086.png" name="temperature086.png" class="plot">temperature086.png</a></span></span>
+<span class="line">timestep 87/101 (85%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 87/101 (85%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 87/101 (85%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 87/101 (85%) &middot; <span class="path"><a href="temperature087.png" name="temperature087.png" class="plot">temperature087.png</a></span></span>
+<span class="line">timestep 88/101 (86%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 88/101 (86%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 88/101 (86%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 88/101 (86%) &middot; <span class="path"><a href="temperature088.png" name="temperature088.png" class="plot">temperature088.png</a></span></span>
+<span class="line">timestep 89/101 (87%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 89/101 (87%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 89/101 (87%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 89/101 (87%) &middot; <span class="path"><a href="temperature089.png" name="temperature089.png" class="plot">temperature089.png</a></span></span>
+<span class="line">timestep 90/101 (88%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 90/101 (88%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 90/101 (88%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 90/101 (88%) &middot; <span class="path"><a href="temperature090.png" name="temperature090.png" class="plot">temperature090.png</a></span></span>
+<span class="line">timestep 91/101 (89%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 91/101 (89%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 91/101 (89%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 91/101 (89%) &middot; <span class="path"><a href="temperature091.png" name="temperature091.png" class="plot">temperature091.png</a></span></span>
+<span class="line">timestep 92/101 (90%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 92/101 (90%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 92/101 (90%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 92/101 (90%) &middot; <span class="path"><a href="temperature092.png" name="temperature092.png" class="plot">temperature092.png</a></span></span>
+<span class="line">timestep 93/101 (91%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 93/101 (91%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 93/101 (91%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 93/101 (91%) &middot; <span class="path"><a href="temperature093.png" name="temperature093.png" class="plot">temperature093.png</a></span></span>
+<span class="line">timestep 94/101 (92%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 94/101 (92%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 94/101 (92%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 94/101 (92%) &middot; <span class="path"><a href="temperature094.png" name="temperature094.png" class="plot">temperature094.png</a></span></span>
+<span class="line">timestep 95/101 (93%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 95/101 (93%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 95/101 (93%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 95/101 (93%) &middot; <span class="path"><a href="temperature095.png" name="temperature095.png" class="plot">temperature095.png</a></span></span>
+<span class="line">timestep 96/101 (94%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 96/101 (94%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 96/101 (94%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 96/101 (94%) &middot; <span class="path"><a href="temperature096.png" name="temperature096.png" class="plot">temperature096.png</a></span></span>
+<span class="line">timestep 97/101 (95%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 97/101 (95%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 97/101 (95%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 97/101 (95%) &middot; <span class="path"><a href="temperature097.png" name="temperature097.png" class="plot">temperature097.png</a></span></span>
+<span class="line">timestep 98/101 (96%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 98/101 (96%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 98/101 (96%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 98/101 (96%) &middot; <span class="path"><a href="temperature098.png" name="temperature098.png" class="plot">temperature098.png</a></span></span>
+<span class="line">timestep 99/101 (97%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 99/101 (97%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 99/101 (97%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 99/101 (97%) &middot; <span class="path"><a href="temperature099.png" name="temperature099.png" class="plot">temperature099.png</a></span></span>
+<span class="line">timestep 100/101 (98%) &middot; solving system &middot; <span class="info">solving system using sparse direct solver</span></span>
+<span class="line">timestep 100/101 (98%) &middot; elem_eval &middot; <span class="debug">cache effectivity 99% (hit 12277/12288 calls over 11 functions)</span></span>
+<span class="line">timestep 100/101 (98%) &middot; elem_eval &middot; <span class="info">created ndarray(36864,2), ndarray(36864)</span></span>
+<span class="line">timestep 100/101 (98%) &middot; <span class="path"><a href="temperature100.png" name="temperature100.png" class="plot">temperature100.png</a></span></span>
+<span class="info">
+
+finish Thu Apr 28 01:23:58 2016
+elapsed 00:08:22
+
+</span>
+</pre></body></html>
