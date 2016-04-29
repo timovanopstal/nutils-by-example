@@ -32,7 +32,7 @@ explicitly listed.  The following special cases apply:
          2
         ∂ u
            i
-        ------
+        ------ .
         ∂x ∂x
           j  k
     $$
@@ -46,7 +46,7 @@ explicitly listed.  The following special cases apply:
     $$
             2
            ∂ u         ∂w
-        ∑  --- + ∑  v  ---
+        ∑  --- + ∑  v  --- .
          i   2    j  j ∂x
            ∂x            j
              i
@@ -544,8 +544,8 @@ The solution:
 [heat equation]: https://en.wikipedia.org/wiki/Heat_equation
 [Crank–Nicolson method]: https://en.wikipedia.org/wiki/Crank%E2%80%93Nicolson_method
 
-Linear elasticity (to be completed)
-===================================
+Linear elasticity
+=================
 
 All examples given above are scalar.  We end with an example of the
 vector-valued steady [linear elasticity] equations:
