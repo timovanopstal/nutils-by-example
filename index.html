@@ -39,14 +39,14 @@ explicitly listed.  The following special cases apply:</p>
 <p>Indices following a comma denote derivatives:
 <script type="math/tex; mode=display">\begin{equation}u_{i,jk}\end{equation}</script>
     is equivalent to
-<script type="math/tex; mode=display">\begin{equation}\frac{∂^{2}u_{i}}{∂x_{j}∂x_{k}}\end{equation}</script>
+<script type="math/tex; mode=display">\begin{equation}\frac{∂^{2}u_{i}}{∂x_{j}∂x_{k}} .\end{equation}</script>
 </p>
 </li>
 <li>
 <p>Repeated indices in a term are summed:
 <script type="math/tex; mode=display">\begin{equation}u_{,ii} + v_{j} w_{,j}\end{equation}</script>
     is equivalent to
-<script type="math/tex; mode=display">\begin{equation}∑_{i} \frac{∂^{2}u}{∂x^{2}_{i}} + ∑_{j} v_{j} \frac{∂w}{∂x_{j}}\end{equation}</script>
+<script type="math/tex; mode=display">\begin{equation}∑_{i} \frac{∂^{2}u}{∂x^{2}_{i}} + ∑_{j} v_{j} \frac{∂w}{∂x_{j}} .\end{equation}</script>
 </p>
 </li>
 </ul>
@@ -538,7 +538,7 @@ weak formulation and finds a solution from <script type="math/tex">t=0</script> 
     <source src='logs/heat.py/temperature.mp4' type='video/mp4'/>
 </video>
 
-<h1>Linear elasticity (to be completed)</h1>
+<h1>Linear elasticity</h1>
 <p>All examples given above are scalar.  We end with an example of the
 vector-valued steady <a href="https://en.wikipedia.org/wiki/Linear_elasticity">linear elasticity</a> equations:
 <script type="math/tex; mode=display">\begin{equation}\left\{\begin{array}{r@{}lr@{}l}\displaystyle &\displaystyle σ_{ji,j} = 0&\displaystyle &\displaystyle \text{on } Ω_{0},\\\displaystyle &\displaystyle u_{k} = 0&\displaystyle &\displaystyle \text{on } Γ_{\text{left}},\\\displaystyle &\displaystyle u_{k} n_{k} = \frac{1}{2}&\displaystyle &\displaystyle \text{on } Γ_{\text{right},}\\\displaystyle &\displaystyle u_{,k} n_{k} = 0&\displaystyle &\displaystyle \text{on } Γ_{\text{top}}, Γ_{\text{bottom}},\end{array}\right.               \label{sys-lin-elas}\end{equation}</script>
