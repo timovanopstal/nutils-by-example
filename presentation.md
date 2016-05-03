@@ -714,7 +714,7 @@ Open a terminal and run
 
     :::bash
     wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    bash Miniconda3-latest-Linux-x86_64.sh -b -f "$HOME/miniconda3"
+    bash Miniconda3-latest-Linux-x86_64.sh -b -f -p "$HOME/miniconda3"
     export PATH="$HOME/miniconda3/bin:$PATH"
     echo '# add conda to PATH' >> "$HOME/.bashrc"
     echo 'export PATH="$HOME/miniconda3/bin:$PATH"' >> "$HOME/.bashrc"
@@ -728,7 +728,7 @@ Open a terminal and run
 
     :::bash
     wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
-    bash Miniconda3-latest-MacOSX-x86_64.sh -b -f "$HOME/miniconda3"
+    bash Miniconda3-latest-MacOSX-x86_64.sh -b -f -p "$HOME/miniconda3"
     export PATH="$HOME/miniconda3/bin:$PATH"
     echo '# add conda to PATH' >> "$HOME/.bashrc"
     echo 'export PATH="$HOME/miniconda3/bin:$PATH"' >> "$HOME/.bashrc"
