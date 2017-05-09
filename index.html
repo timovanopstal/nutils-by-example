@@ -4,7 +4,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'/>
     <meta charset='utf-8'/>
     <title>Nutils by example</title>
-    <script src='https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js'></script>
     <script>
       MathJax.Hub.Config({
         jax: ['input/TeX','output/CommonHTML'],
@@ -68,7 +68,7 @@ basis <script type="math/tex">φ</script> with vector <script type="math/tex">w<
 <p>Let <script type="math/tex">T</script> be a structured partition of <script type="math/tex">8×8</script> equally sized elements of <script type="math/tex">Ω</script> and
 <script type="math/tex">φ</script> a linear basis on <script type="math/tex">T</script>.  The following Nutils script implements the weak
 formulation and finds a solution:</p>
-<div class="highlight python linenos"><span class="filename">file: <a href="laplace_neumann_simple.py" download>laplace_neumann_simple.py</a></span><pre><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight python linenos"><p class="filename">file: <a href="laplace_neumann_simple.py" download>laplace_neumann_simple.py</a></p><pre><span></span><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="lineno"> 4 </span>
 <span class="lineno"> 5 </span><span class="c1"># construct topology, geometry and basis</span>
 <span class="lineno"> 6 </span><span class="n">verts</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
@@ -87,7 +87,7 @@ formulation and finds a solution:</p>
 
 <h2>Importing nutils</h2>
 <p>In this script the line</p>
-<div class="highlight python"><pre><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight python"><pre><span></span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 
 
@@ -96,7 +96,7 @@ scripts.  See the <a href="https://docs.python.org/3/tutorial/modules.html#packa
 importing packages.</p>
 <h2>Topology and geometry</h2>
 <p>With the line</p>
-<div class="highlight python"><pre><span class="n">domain</span><span class="p">,</span> <span class="n">geom</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rectilinear</span><span class="p">([</span><span class="n">verts</span><span class="p">,</span> <span class="n">verts</span><span class="p">])</span>
+<div class="highlight python"><pre><span></span><span class="n">domain</span><span class="p">,</span> <span class="n">geom</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rectilinear</span><span class="p">([</span><span class="n">verts</span><span class="p">,</span> <span class="n">verts</span><span class="p">])</span>
 </pre></div>
 
 
@@ -118,7 +118,7 @@ elements, but no geometric information.  The geometry object is a Nutils
 function that connects a topological coordinate to a geometric coordinate.  To
 illustrate the difference the following example generates the same
 one-dimensional topology twice, but with different geometry functions:</p>
-<div class="highlight python"><pre><span class="n">verts1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<div class="highlight python"><pre><span></span><span class="n">verts1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="n">domain1</span><span class="p">,</span> <span class="n">geom1</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rectilinear</span><span class="p">([</span><span class="n">verts1</span><span class="p">])</span>
 <span class="n">verts2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">domain2</span><span class="p">,</span> <span class="n">geom2</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rectilinear</span><span class="p">([</span><span class="n">verts2</span><span class="p">])</span>
@@ -127,7 +127,7 @@ one-dimensional topology twice, but with different geometry functions:</p>
 
 <h2>Basis</h2>
 <p>With</p>
-<div class="highlight python"><pre><span class="n">basis</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">basis</span><span class="p">(</span><span class="s1">&#39;spline&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight python"><pre><span></span><span class="n">basis</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">basis</span><span class="p">(</span><span class="s1">&#39;spline&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 
@@ -148,7 +148,7 @@ function.  For example <code>basis.shape</code> returns <code>(91,)</code> and <
 The following python code evaluates the integral
 <script type="math/tex; mode=display">\begin{equation}A_{ij} = ∫_{Ω} φ_{i,k} φ_{j,k} \ dΩ:\end{equation}</script>
 </p>
-<div class="highlight python"><pre><span class="n">A</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span>
+<div class="highlight python"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span>
     <span class="n">basis</span><span class="p">[</span><span class="s1">&#39;i,k&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">basis</span><span class="p">[</span><span class="s1">&#39;j,k&#39;</span><span class="p">],</span>
     <span class="n">geometry</span><span class="o">=</span><span class="n">geom</span><span class="p">,</span> <span class="n">ischeme</span><span class="o">=</span><span class="s1">&#39;gauss3&#39;</span><span class="p">)</span>
 </pre></div>
@@ -174,7 +174,7 @@ preconditioned with ILU.  By omitting the first (positional) argument the right
 hand side is assumed to be zero.</p>
 <p>Instead of using Nutils' sparse matrix class, you can extract a <a href="http://docs.scipy.org/doc/scipy-0.14.0/reference/sparse.html">scipy sparse</a>
 matrix object by calling the matrix method <code>toscipy()</code>:</p>
-<div class="highlight python"><pre><span class="n">B</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">toscipy</span><span class="p">()</span>
+<div class="highlight python"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">toscipy</span><span class="p">()</span>
 </pre></div>
 
 
@@ -203,7 +203,7 @@ limited to the boundary <script type="math/tex">∂Ω</script>.</p>
 <p>Again, let <script type="math/tex">T</script> be a structured partition of <script type="math/tex">8×8</script> equally sized elements of <script type="math/tex">Ω</script>
 and <script type="math/tex">φ</script> a linear basis on <script type="math/tex">T</script>.  The following Nutils script implements the weak
 formulation and finds a solution:</p>
-<div class="highlight python linenos"><span class="filename">file: <a href="laplace_dirichlet_simple.py" download>laplace_dirichlet_simple.py</a></span><pre><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight python linenos"><p class="filename">file: <a href="laplace_dirichlet_simple.py" download>laplace_dirichlet_simple.py</a></p><pre><span></span><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="lineno"> 4 </span>
 <span class="lineno"> 5 </span><span class="c1"># construct topology, geometry and basis</span>
 <span class="lineno"> 6 </span><span class="n">verts</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
@@ -231,7 +231,7 @@ formulation and finds a solution:</p>
 <p>We explain the differences with the previous script.  We create a function <code>f</code>
 by calling <code>function.sin</code> on the first component of the two-dimensional
 geometry and <code>function.exp</code> on the second component:</p>
-<div class="highlight python"><pre><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">geom</span>
+<div class="highlight python"><pre><span></span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">geom</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">*</span> <span class="n">function</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
 </pre></div>
 
@@ -240,7 +240,7 @@ geometry and <code>function.exp</code> on the second component:</p>
 <code>geom</code>.</p>
 <p>The dirichlet constraint <script type="math/tex">\eqref{pure-dirichlet-cons}</script> is applied in the
 following two statements:</p>
-<div class="highlight python"><pre><span class="n">cons</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">boundary</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+<div class="highlight python"><pre><span></span><span class="n">cons</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">boundary</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
     <span class="n">f</span><span class="p">,</span> <span class="n">onto</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geom</span><span class="p">,</span> <span class="n">ischeme</span><span class="o">=</span><span class="s1">&#39;gauss3&#39;</span><span class="p">)</span>
 <span class="n">w</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">constrain</span><span class="o">=</span><span class="n">cons</span><span class="p">)</span>
 </pre></div>
@@ -268,7 +268,7 @@ stored in the folder <code>public_html</code> in your home directory.  The file 
 in this directory points to the latest simulation.</p>
 <p>The following script models the same problem as discussed above, but supports
 log files:</p>
-<div class="highlight python linenos"><span class="filename">file: <a href="laplace_dirichlet.py" download>laplace_dirichlet.py</a></span><pre><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight python linenos"><p class="filename">file: <a href="laplace_dirichlet.py" download>laplace_dirichlet.py</a></p><pre><span></span><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="lineno"> 4 </span>
 <span class="lineno"> 5 </span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">nelems</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="lineno"> 6 </span>
@@ -303,7 +303,7 @@ log files:</p>
 <span class="lineno">35 </span>        <span class="n">plt</span><span class="o">.</span><span class="n">mesh</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
 <span class="lineno">36 </span>        <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 <span class="lineno">37 </span>
-<span class="lineno">38 </span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="lineno">38 </span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 <span class="lineno">39 </span>    <span class="n">util</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
 </pre></div>
 
@@ -315,29 +315,29 @@ log files:</p>
 <p>We explain the differences with the previous script.  All statements of the
 previous script excluding the <code>import</code> statement are put into the function
 <code>main</code>:</p>
-<div class="highlight python"><pre><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">nelems</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="highlight python"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">nelems</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 
     <span class="o">...</span> <span class="c1"># contents previous script plus plotting</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">util</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
 </pre></div>
 
 
 <p>You can run this script by typing</p>
-<div class="highlight bash"><pre>python3 laplace_dirichlet.py
+<div class="highlight bash"><pre><span></span>python3 laplace_dirichlet.py
 </pre></div>
 
 
 <p>in a shell.  The arguments <code>nelems</code> and <code>degree</code> can be specified on the
 command line, e.g.</p>
-<div class="highlight bash"><pre>python3 laplace_dirichlet.py --nelems<span class="o">=</span><span class="m">16</span> --degree<span class="o">=</span>2
+<div class="highlight bash"><pre><span></span>python3 laplace_dirichlet.py --nelems<span class="o">=</span><span class="m">16</span> --degree<span class="o">=</span><span class="m">2</span>
 </pre></div>
 
 
 <p>runs the script with variables <code>nelems</code> set to <code>16</code> and <code>degree</code> to <code>2</code>.</p>
 <p>The statement</p>
-<div class="highlight python"><pre><span class="n">u</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<div class="highlight python"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 </pre></div>
 
 
@@ -369,7 +369,7 @@ same as for the problem with purely Dirichlet boundary conditions.</p>
 and <script type="math/tex">φ</script> a linear basis on <script type="math/tex">T</script>.  The following snippet shows the differences
 between the script for purely Dirichlet boundary conditions with the present
 case:</p>
-<div class="highlight python linenos"><span class="filename">file: <a href="laplace_mixed.py" download>laplace_mixed.py</a></span><pre><span class="lineno">21 </span>    <span class="c1"># construct dirichlet boundary constraints</span>
+<div class="highlight python linenos"><p class="filename">file: <a href="laplace_mixed.py" download>laplace_mixed.py</a></p><pre><span></span><span class="lineno">21 </span>    <span class="c1"># construct dirichlet boundary constraints</span>
 <span class="lineno">22 </span>    <span class="n">cons</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">boundary</span><span class="p">[</span><span class="s1">&#39;left,bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
 <span class="lineno">23 </span>        <span class="n">f</span><span class="p">,</span> <span class="n">onto</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geom</span><span class="p">,</span> <span class="n">ischeme</span><span class="o">=</span><span class="n">ischeme</span><span class="p">)</span>
 <span class="lineno">24 </span>
@@ -389,7 +389,7 @@ case:</p>
 <p><img alt="dirichlet" src="logs/laplace_mixed.py/solution000.png" /></p>
 <p>Since we are applying Dirichlet boundary conditions only on the left and bottom
 side of the domain, we have updated the projection of <code>f</code> as follows:</p>
-<div class="highlight python"><pre><span class="c1"># construct dirichlet boundary constraints</span>
+<div class="highlight python"><pre><span></span><span class="c1"># construct dirichlet boundary constraints</span>
 <span class="n">cons</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">boundary</span><span class="p">[</span><span class="s1">&#39;left,bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
     <span class="n">f</span><span class="p">,</span> <span class="n">onto</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geom</span><span class="p">,</span> <span class="n">ischeme</span><span class="o">=</span><span class="n">ischeme</span><span class="p">)</span>
 </pre></div>
@@ -399,7 +399,7 @@ side of the domain, we have updated the projection of <code>f</code> as follows:
 of <code>domain</code> limited to the left and bottom side.</p>
 <p>The Neumann boundary condition, the left hand side of
 <script type="math/tex">\eqref{mixed-neumann-bc}</script> is implemented as follows:</p>
-<div class="highlight python"><pre><span class="c1"># construct right hand side</span>
+<div class="highlight python"><pre><span></span><span class="c1"># construct right hand side</span>
 <span class="n">n</span> <span class="o">=</span> <span class="n">geom</span><span class="o">.</span><span class="n">normal</span><span class="p">()</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">boundary</span><span class="p">[</span><span class="s1">&#39;right,top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span>
     <span class="n">basis</span><span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;,k&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span>
@@ -423,7 +423,7 @@ boundary conditions on a circular domain:
 <p>In the Nutils script the only difference with the previous script is the
 definitions of the geometry.  We create a structured topology and geometry as
 before and redefine <code>geom</code> using <script type="math/tex">\eqref{map-square-circle}</script>:</p>
-<div class="highlight python linenos"><span class="filename">file: <a href="laplace_mixed_circle.py" download>laplace_mixed_circle.py</a></span><pre><span class="lineno"> 9 </span>    <span class="n">domain</span><span class="p">,</span> <span class="n">geom</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rectilinear</span><span class="p">([</span><span class="n">verts</span><span class="p">,</span> <span class="n">verts</span><span class="p">])</span>
+<div class="highlight python linenos"><p class="filename">file: <a href="laplace_mixed_circle.py" download>laplace_mixed_circle.py</a></p><pre><span></span><span class="lineno"> 9 </span>    <span class="n">domain</span><span class="p">,</span> <span class="n">geom</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rectilinear</span><span class="p">([</span><span class="n">verts</span><span class="p">,</span> <span class="n">verts</span><span class="p">])</span>
 <span class="lineno">10 </span>    <span class="n">geom</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span>
 <span class="lineno">11 </span>        <span class="n">function</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">geom</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">function</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">geom</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
 <span class="lineno">12 </span>        <span class="n">function</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">geom</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">function</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">geom</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
@@ -471,7 +471,7 @@ the temporal part reads:</p>
 <p>Let <script type="math/tex">T</script> be a structured partition of <script type="math/tex">64×64</script> equally sized elements of <script type="math/tex">Ω</script> and
 <script type="math/tex">φ</script> a second order basis on <script type="math/tex">T</script>.  The following Nutils script implements the
 weak formulation and finds a solution from <script type="math/tex">t=0</script> to <script type="math/tex">t=1</script> in hundred steps:</p>
-<div class="highlight python linenos"><span class="filename">file: <a href="heat.py" download>heat.py</a></span><pre><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight python linenos"><p class="filename">file: <a href="heat.py" download>heat.py</a></p><pre><span></span><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="lineno"> 4 </span>
 <span class="lineno"> 5 </span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">nelems</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">tend</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="lineno"> 6 </span>
@@ -527,7 +527,7 @@ weak formulation and finds a solution from <script type="math/tex">t=0</script> 
 <span class="lineno">56 </span>            <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 <span class="lineno">57 </span>            <span class="n">plt</span><span class="o">.</span><span class="n">clim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="lineno">58 </span>
-<span class="lineno">59 </span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="lineno">59 </span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 <span class="lineno">60 </span>    <span class="n">util</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
 </pre></div>
 
@@ -569,7 +569,7 @@ A weak formulation of system <script type="math/tex">\eqref{sys-lin-elas}</scrip
 </p>
 </blockquote>
 <p>The Nutils equivalent:</p>
-<div class="highlight python linenos"><span class="filename">file: <a href="linear_elasticity.py" download>linear_elasticity.py</a></span><pre><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight python linenos"><p class="filename">file: <a href="linear_elasticity.py" download>linear_elasticity.py</a></p><pre><span></span><span class="lineno"> 3 </span><span class="kn">from</span> <span class="nn">nutils</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="lineno"> 4 </span>
 <span class="lineno"> 5 </span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">nelems</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">stress</span><span class="o">=</span><span class="n">library</span><span class="o">.</span><span class="n">Hooke</span><span class="p">(</span><span class="n">lmbda</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
 <span class="lineno"> 6 </span>
@@ -616,7 +616,7 @@ A weak formulation of system <script type="math/tex">\eqref{sys-lin-elas}</scrip
 <h2>Vector basis</h2>
 <p>In order to create a vector basis you can use the <code>vector</code> method of a scalar
 basis:</p>
-<div class="highlight python"><pre><span class="n">dbasis</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">basis</span><span class="p">(</span><span class="s1">&#39;spline&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="n">degree</span><span class="p">)</span><span class="o">.</span><span class="n">vector</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight python"><pre><span></span><span class="n">dbasis</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">basis</span><span class="p">(</span><span class="s1">&#39;spline&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="n">degree</span><span class="p">)</span><span class="o">.</span><span class="n">vector</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
 
@@ -625,7 +625,7 @@ basis has two axes: a dofs axis of size <script type="math/tex">n*k</script> and
 <script type="math/tex">n</script> is the length of the scalar basis and <script type="math/tex">k</script> is the vector length.</p>
 <h2>Combining constraints</h2>
 <p>Multiple constraints can be 'combined' with the or operator <code>|</code>:</p>
-<div class="highlight python"><pre><span class="n">cons</span> <span class="o">=</span> <span class="n">cons1</span> <span class="o">|</span> <span class="n">cons2</span> <span class="o">|</span> <span class="n">cons3</span>
+<div class="highlight python"><pre><span></span><span class="n">cons</span> <span class="o">=</span> <span class="n">cons1</span> <span class="o">|</span> <span class="n">cons2</span> <span class="o">|</span> <span class="n">cons3</span>
 </pre></div>
 
 
@@ -635,7 +635,7 @@ basis has two axes: a dofs axis of size <script type="math/tex">n*k</script> and
 domain with a hole centred at <script type="math/tex">(0.6, 0.4)</script> with radius <script type="math/tex">0.2</script>.  In Nutils we can
 create a mesh for this domain be 'trimming' a structured mesh based on a level
 set:</p>
-<div class="highlight python linenos"><span class="filename">file: <a href="linear_elasticity_with_hole.py" download>linear_elasticity_with_hole.py</a></span><pre><span class="lineno"> 7 </span>    <span class="c1"># construct topology, geometry and basis</span>
+<div class="highlight python linenos"><p class="filename">file: <a href="linear_elasticity_with_hole.py" download>linear_elasticity_with_hole.py</a></p><pre><span></span><span class="lineno"> 7 </span>    <span class="c1"># construct topology, geometry and basis</span>
 <span class="lineno"> 8 </span>    <span class="n">verts</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nelems</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 <span class="lineno"> 9 </span>    <span class="n">domain</span><span class="p">,</span> <span class="n">geom</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rectilinear</span><span class="p">([</span><span class="n">verts</span><span class="p">,</span><span class="n">verts</span><span class="p">])</span>
 <span class="lineno">10 </span>
@@ -678,7 +678,7 @@ Computational Methods in Applied Mechanical Engineering 284: 138–164, 2015,
 <p>Nutils requires python3 (version 3.3 or higher) with modules 'numpy', 'scipy'
 and 'matplotlib'.  If this is already installed on your computer together with
 'pip', you can install nutils by running</p>
-<div class="highlight bash"><pre>pip3 install --user https://github.com/nutils/nutils/archive/master.zip
+<div class="highlight bash"><pre><span></span>pip3 install --user https://github.com/nutils/nutils/archive/master.zip
 </pre></div>
 
 
@@ -687,11 +687,11 @@ and 'matplotlib'.  If this is already installed on your computer together with
 want to consider <a href="https://github.com/spyder-ide/spyder/">Spyder</a>.  The installation instructions below include Spyder.</p>
 <h2>Linux</h2>
 <p>Open a terminal and run</p>
-<div class="highlight bash"><pre>wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh -b -f -p <span class="s2">&quot;</span>$<span class="s2">HOME/miniconda3&quot;</span>
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span>$<span class="s2">HOME/miniconda3/bin:</span>$<span class="s2">PATH&quot;</span>
-<span class="nb">echo</span> <span class="s1">&#39;# add conda to PATH&#39;</span> &gt;&gt; <span class="s2">&quot;</span>$<span class="s2">HOME/.bashrc&quot;</span>
-<span class="nb">echo</span> <span class="s1">&#39;export PATH=&quot;$HOME/miniconda3/bin:$PATH&quot;&#39;</span> &gt;&gt; <span class="s2">&quot;</span>$<span class="s2">HOME/.bashrc&quot;</span>
+<div class="highlight bash"><pre><span></span>wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -f -p <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/miniconda3&quot;</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/miniconda3/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s1">&#39;# add conda to PATH&#39;</span> &gt;&gt; <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.bashrc&quot;</span>
+<span class="nb">echo</span> <span class="s1">&#39;export PATH=&quot;$HOME/miniconda3/bin:$PATH&quot;&#39;</span> &gt;&gt; <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.bashrc&quot;</span>
 conda install -y pip numpy scipy matplotlib spyder
 pip install https://github.com/nutils/nutils/archive/master.zip
 </pre></div>
@@ -699,11 +699,11 @@ pip install https://github.com/nutils/nutils/archive/master.zip
 
 <h2>OS X</h2>
 <p>Open a terminal and run</p>
-<div class="highlight bash"><pre>wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
-bash Miniconda3-latest-MacOSX-x86_64.sh -b -f -p <span class="s2">&quot;</span>$<span class="s2">HOME/miniconda3&quot;</span>
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span>$<span class="s2">HOME/miniconda3/bin:</span>$<span class="s2">PATH&quot;</span>
-<span class="nb">echo</span> <span class="s1">&#39;# add conda to PATH&#39;</span> &gt;&gt; <span class="s2">&quot;</span>$<span class="s2">HOME/.bashrc&quot;</span>
-<span class="nb">echo</span> <span class="s1">&#39;export PATH=&quot;$HOME/miniconda3/bin:$PATH&quot;&#39;</span> &gt;&gt; <span class="s2">&quot;</span>$<span class="s2">HOME/.bashrc&quot;</span>
+<div class="highlight bash"><pre><span></span>wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
+bash Miniconda3-latest-MacOSX-x86_64.sh -b -f -p <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/miniconda3&quot;</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/miniconda3/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s1">&#39;# add conda to PATH&#39;</span> &gt;&gt; <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.bashrc&quot;</span>
+<span class="nb">echo</span> <span class="s1">&#39;export PATH=&quot;$HOME/miniconda3/bin:$PATH&quot;&#39;</span> &gt;&gt; <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.bashrc&quot;</span>
 conda install -y pip numpy scipy matplotlib spyder
 pip install https://github.com/nutils/nutils/archive/master.zip
 </pre></div>
@@ -711,7 +711,7 @@ pip install https://github.com/nutils/nutils/archive/master.zip
 
 <h2>Windows</h2>
 <p>Install <a href="http://winpython.github.io/">WinPython</a> 3.4 or 3.5.  Open a WinPython command prompt and run</p>
-<div class="highlight bash"><pre>pip install https://github.com/nutils/nutils/archive/master.zip
+<div class="highlight bash"><pre><span></span>pip install https://github.com/nutils/nutils/archive/master.zip
 </pre></div>
 
 
