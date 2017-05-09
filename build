@@ -65,7 +65,7 @@ class PygmentsTreeprocessor(markdown.treeprocessors.Treeprocessor):
         assert highlighted.startswith(start_tag)
         highlighted = (
             start_tag
-            + '<span class="filename">file: <a href="{0}" download>{0}</a></span>'
+            + '<p class="filename">file: <a href="{0}" download>{0}</a></p>'
                 .format(html.escape(filename))
             + highlighted[len(start_tag):]
         )

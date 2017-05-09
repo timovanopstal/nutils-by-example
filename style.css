@@ -41,6 +41,10 @@ pre, code, .highlight .filename {
   font-family: 'PT Mono', monospace;
   font-size: 80%;
 }
+.filename {
+  margin: 0px 0px 10px;
+  text-align: right;
+}
 blockquote {
   padding: 0px;
   margin: 1em 0px;
