@@ -110,7 +110,7 @@ HTML_HEADER = '''\
     <meta name='viewport' content='width=device-width, initial-scale=1'/>
     <meta charset='utf-8'/>
     <title>{title}</title>
-    <script src='https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js'></script>
     <script>
       MathJax.Hub.Config({{
         jax: ['input/TeX','output/CommonHTML'],
