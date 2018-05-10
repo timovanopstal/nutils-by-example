@@ -5,12 +5,12 @@ title: Nutils by example
 About Nutils
 ============
 
-[Nutils] is a python based finite element package.  Nutils does not come with a
-GUI.  You have to write a python script yourself.  Nutils provides a set of
+[Nutils] is a Python-based finite element package.  Nutils does not come with a
+GUI.  You have to write a Python script yourself.  Nutils provides a set of
 tools help you implement a weak formulation quite easily.
 
-Some basic understanding of python is useful.  If you are unfamiliar with python
-you might want to browser through a [tutorial][Python tutorial].
+Some basic understanding of Python is useful.  If you are unfamiliar with Python
+you might want to browse through a [tutorial][Python tutorial].
 
 [Nutils]: http://www.nutils.org/
 [Python tutorial]: https://docs.python.org/3/tutorial/index.html
@@ -59,29 +59,35 @@ Laplace's equation with Neumann BC's
 
 Consider the following system ([Laplace's equation] with homogeneous Neumann
 boundary conditions):
-$$
-    { & -u    = 0    & "on " Ω,  .
-    {     ,kk                    .
-    {                            .
-    { & u   n  = 0   & "on " ∂Ω, .
-    {    ,k  k                   .
-$$
+>   Find $u: Ω → ℝ$ such that
+>   $$
+>       { & -u    = 0    & "on " Ω,  .
+>       {     ,kk                    .
+>       {                            .
+>       { & u   n  = 0   & "on " ∂Ω, .
+>       {    ,k  k                   .
+>   $$
 with $n$ the outward normal and domain $Ω = [-1/\sqrt{2},1/\sqrt{2}]^2$.
 Note that this system is singular.
 
 [Laplace's equation]: https://en.wikipedia.org/wiki/Laplace%27s_equation
 
-Let $φ: Ω → ℝ^N$ a basis on domain $Ω$.  A weak formulation of this system
-reads:
+Let $φ: Ω → ℝ^N$ be a basis on domain $Ω$.  The solution $u$ is then
+approximated by
+$$
+     h
+    u  = φ  w
+          i  i
+$$
+i.e., the dot product of the basis $φ$ with vector $w$.  A weak formulation of
+this system reads:
 
->   Find $w_j$ such that for all $i ∈ \{0,1,\ldots, N-1\}$
+>   Find $u^h$ such that for all $n ∈ \{0,1,\ldots, N-1\}$
 >   $$
->       ∫  φ    φ    w  \ dΩ = 0.
->        Ω  i,k  j,k  j
+>                h
+>       ∫  φ    u   \ dΩ = 0.                         (@pure-neumann-cons)
+>        Ω  n,k  ,k
 >   $$
-
-The solution $u$ is then approximated by $φ_j w_j$, i.e. the dot product of the
-basis $φ$ with vector $w$.
 
 Let $T$ be a structured partition of $8×8$ equally sized elements of $Ω$ and
 $φ$ a linear basis on $T$.  The following Nutils script implements the weak
@@ -96,7 +102,7 @@ In this script the line
 
     from nutils import *
 
-loads the python package `nutils`.  This line is mandatory for all nutils
+loads the Python package `nutils`.  This line is mandatory for all nutils
 scripts.  See the [python docs][python packages] for more information on
 importing packages.
 
@@ -154,53 +160,83 @@ functions.  In the example script there are 91 basis functions, one per vertex
 if the basis is linear.  The function attribute `shape` returns the shape of a
 function.  For example `basis.shape` returns `(91,)` and `geom.shape` `(2,)`.
 
+Namespace
+---------
+
+Nutils provides a Namespace class to collect functions and constants related to
+each other. It always contains a geometry field, named `x` by default, we set
+this field to the value obtained above:
+
+    ns.x = geom
+
+In a similar way, we can add the basis $φ$:
+
+    ns.φ = basis
+
+Recall that our approximation $u_h$ is the dot product of the basis $φ$ with a
+set of coefficients $w$. This can be expressed as follows: 
+
+    ns.uh = 'φ_n ?w_n'
+
+Namespaces support string interpretation, so that there is a close
+correspondence between the script and the mathematical fomrulation:
+
+* `φ` is recognized as a member of `ns` (defined on the previous line)
+* `_` prepends the indices, the number of indices much match the number of axes
+  of the object, in this case `φ`, which has a single axis for the degrees of
+  freedom.
+* `n` enumerates the first (and only) axis of `φ`
+* `?`  prompts the parser to dot the degree-of-freedom axes in the preceding
+  substring with certain coefficient vectors.
+* `w_n` assigns the name `w` to the coefficient vector of `uh`. `w` has a single
+  axis, so we supply a single index, which corresponds to the index of the
+  basis, since repeated indices imply summation, resulting in the required dot
+  product.
+
+Finally, the integrand of the weak form in $\eqref{pure-neumann-cons}$,
+$φ_{,i} u^h_{,i}$, can be scripted as a string that again closely resembles the
+mathematics: `'φ_n,i uh_,i' @ ns`.  `@` instructs Nutils that the preceding
+string should be evaluated with members of the namespace following it.
+
 Numerical integration
 ---------------------
 
-Every topology object has an `integrate` method that can integrate an integrand
-(first argument) using a numerical scheme specified by the [keyword argument]
-`ischeme` on a certain geometry specified by the keyword argument `geometry`.
-The following python code evaluates the integral
-$$
-    A   = ∫  φ    φ    \ dΩ:
-     ij    Ω  i,k  j,k
-$$
+Every topology object has an `integral` method that returns a delayed-evaluation
+integral object that can be passed to one of the built-in solvers (which does
+the actual evaluation). 
 
-    A = domain.integrate(
-        basis['i,k'] * basis['j,k'],
-        geometry=geom, ischeme='gauss3')
+    res = domain.integral('φ_n,i uh_,i' @ ns,
+                          geometry=ns.x, ischeme='gauss1')
 
-The `integrate` method generates a sparse matrix if the integrand has two
-dimensions, i.e. two indices.  An integrand with only one index will result in
-a vector.
+The first argument is the integrand discussed above. The integral is evaluated
+using a numerical scheme specified by the [keyword argument] `ischeme` on a
+certain geometry specified by the keyword argument `geometry`.
 
-The shape of the sparse matrix `A` is equal to the shape of the integrand.  In
-this example `A.shape` equals `(basis['i,k'] * basis['j,k']).shape` equals
-`(91, 91)`.
-
-Matrices
+Solution
 --------
 
-A sparse matrix has a `solve` method that solves linear problems of the form `A
-x = b`, where `A` is the sparse matrix and `b` is the right hand side.  Passing
-the right hand side as the first argument to `solve`, e.g. `A.solve(b)` yields
-the solution `x`.  By default a sparse direct solver is used to solve the
-linear system.  If the keyword argument `tol` is supplied, e.g.  `A.solve(b,
-tol=1e-8)` the linear system is solved using GMRES.  If the keyword argument
-`symmetric=True` is supplied, the linear system is solved using CG.  Note that
-it is your responsibility to ensure the matrix is symmetric positive definite.
-If the keyword argument `precon='spilu'` is supplied the iterative solver is
-preconditioned with ILU.  By omitting the first (positional) argument the right
-hand side is assumed to be zero.
+Since the Laplace problem is stationary and linear in the degrees of freedom, it
+can be solved using the linear solver
 
-Instead of using Nutils' sparse matrix class, you can extract a [scipy sparse]
-matrix object by calling the matrix method `toscipy()`:
+    dofs = solver.solve_linear('w', res)
 
-    B = A.toscipy()
+which internally takes a functional derivative with respect to the degrees of
+freedom `w` defined in the residual `res`, integrates the resulting matrix, and
+solves for the coefficient vector, which is subsequently stored in `dofs`, an
+instance of the familiar `numpy.ndarray`.
+
+Optionally, a dictionary of matrix solver options can be supplied with the
+keyword argument `solveargs`.  By default a sparse direct solver is used to
+solve the linear system.  If the keyword argument `tol` is supplied, e.g.
+`A.solve(b, tol=1e-8)` the linear system is solved using GMRES.  If the keyword
+argument `symmetric=True` is supplied, the linear system is solved using CG.
+Note that it is your responsibility to ensure the matrix is symmetric positive
+definite.  If the keyword argument `precon='spilu'` is supplied the iterative
+solver is preconditioned with [ILU].  By omitting the first (positional)
+argument the right hand side is assumed to be zero.
 
 [ILU]: https://en.wikipedia.org/wiki/Incomplete_LU_factorization
 [keyword argument]: https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments
-[scipy sparse]: http://docs.scipy.org/doc/scipy-0.14.0/reference/sparse.html
 
 Laplace's equation with Dirichlet BC's
 ======================================
@@ -221,24 +257,26 @@ $$
 This system is not singular.  Note that the solution to this problem is $u =
 f$.
 
-A weak formulation of this system reads:
+The solution $u$ is again approximated by $u^h = φ_j w_j$.  A weak formulation
+of the discrete system reads:
 
->   Find $w_j$ such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_i$
+>   Find $u^h$ such that for all $n ∈ \{0, 1, \ldots, N-1\}$ for which $φ_n$
 >   has *no* support on the boundary $∂Ω$
 >   $$
->       ∫  φ    φ    w  \ dΩ = 0,
->        Ω  i,k  j,k  j
+>                h            
+>       ∫  φ    u   \ dΩ = ∫ φ f \ dΩ,
+>        Ω  n,k  ,k         Ω
 >   $$
->   and such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_i$ *has*
+>   and such that for all $n ∈ \{0, 1, \ldots, N-1\}$ for which $φ_n$ *has*
 >   support on the boundary $∂Ω$
 >   $$
->       ∫   φ  ( φ  w  - f ) \ dΩ = 0.                   (@pure-dirichlet-cons)
->        ∂Ω  i (  j  j     )
+>              (  h     )
+>       ∫   φ  ( φ  - f ) \ dΩ = 0.  (@pure-dirichlet-cons)
+>        ∂Ω  n
 >   $$
 
-The solution $u$ is again approximated by $φ_j w_j$.  Note that Equation
-$\eqref{pure-dirichlet-cons}$ is an $L_2$-projection of $f$ onto basis $φ_i$
-limited to the boundary $∂Ω$.
+Note that Equation $\eqref{pure-dirichlet-cons}$ is an $L_2$-projection of $f$
+onto basis $φ_i$ limited to the boundary $∂Ω$.
 
 Again, let $T$ be a structured partition of $8×8$ equally sized elements of $Ω$
 and $φ$ a linear basis on $T$.  The following Nutils script implements the weak
@@ -250,31 +288,32 @@ Dirichlet constraints
 ---------------------
 
 We explain the differences with the previous script.  We create a function `f`
-by calling `function.sin` on the first component of the two-dimensional
-geometry and `function.exp` on the second component:
+in the namespace `ns` by calling the internal `sin` on the first component of
+the two-dimensional geometry `ns.x` and `exp` on the second component:
 
-    x0, x1 = geom
-    f = function.sin(x0) * function.exp(x1)
+    ns.f = 'sin(x_0) exp(x_1)'
 
-The statement `x0, x1 = geom` unpacks the two components of the function
-`geom`.
+Since the keyword arguments to integral are reused, they are stored in a Python
+dictionary object
+
+    kwargs = dict(geometry=ns.x, ischeme='gauss1')
 
 The dirichlet constraint $\eqref{pure-dirichlet-cons}$ is applied in the
-following two statements:
+following three statements:
 
-    cons = domain.boundary.project(
-        f, onto=basis, geometry=geom, ischeme='gauss3')
-    w = A.solve(constrain=cons)
+    sqr = domain.boundary.integral('(uh - f)^2' @ ns, **kwargs)
+    cons = solver.optimize('w', sqr)
+    dofs = solver.solve_linear('w', res, constrain=cons)
 
-The first statement projects the function `f` onto `basis` limited to the
+The second statement projects the function `f` onto `φ`, limited to the
 boundary of `domain`.  The `domain.boundary` is actually another topology
-object, which supports the `integrate` and `project` methods.  The result
-vector `cons` contains values for all basis functions that have support on
-`domain.boundary`, otherwise `float('nan')`.
+object, which supports the `integral`  method.  The result vector `cons`
+contains values for all basis functions that have support on `domain.boundary`,
+otherwise `float('nan')`.
 
-The method `solve` of a Nutils matrix supports an additional keyword argument
-`constrain`.  If supplied, all values, i.e. those that are not `float('nan')`,
-are copied to the solution vector and the remainder is solved.
+The method `solve_linear` supports an additional keyword argument `constrain`.
+If supplied, all values, i.e. those that are not `float('nan')`, are copied to
+the solution vector and the remainder is solved.
 
 To illustrate what happens, consider the linear system $A_{ij} x_j = b_j$ and
 let $i_{\text{U}}$ be an index belonging to the unconstrained set and
@@ -313,12 +352,15 @@ We explain the differences with the previous script.  All statements of the
 previous script excluding the `import` statement are put into the function
 `main`:
 
-    def main(nelems=8, degree=1):
+    def main(
+          nelems: 'number of elements in one direction' = 8,
+          degree: 'polynomial degree of spline basis' = 1
+        ):
 
         ... # contents previous script plus plotting
 
     if __name__ == '__main__':
-        util.run(main)
+        cli.run(main)
 
 You can run this script by typing
 
@@ -335,7 +377,7 @@ runs the script with variables `nelems` set to `16` and `degree` to `2`.
 
 The statement
 
-    u = basis.dot(w)
+    sol = 'uh' @ ns(w=dofs)
 
 creates a solution function, the equivalent of $u = φ_i w_i$ where $φ_i$ is the
 basis.
@@ -366,18 +408,20 @@ same as for the problem with purely Dirichlet boundary conditions.
 
 A weak formulation of this system reads:
 
->   Find $w_j$ such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_i$
+>   Find $u^h$ such that for all $n ∈ \{0, 1, \ldots, N-1\}$ for which $φ_n$
 >   has *no* support on $Γ_{\text{d}}$
 >   $$
->       ∫  φ    φ    w  \ dΩ = ∫     φ  f   n  \ dΓ,        (@mixed-neumann-bc)
->        Ω  i,k  j,k  j         Γ     i  ,k  k
->                                "n"
+>                h
+>       ∫  φ    u   \ dΩ = ∫     φ  f   n  \ dΓ,        (@mixed-neumann-bc)
+>        Ω  i,k  ,k         Γ     i  ,k  k
+>                            "n"
 >   $$
->   and such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_i$ *has*
+>   and such that for all $n ∈ \{0, 1, \ldots, N-1\}$ for which $φ_n$ *has*
 >   support on $Γ_{\text{d}}$
 >   $$
->       ∫     φ  ( φ  w  - f ) \ dΓ = 0.
->        Γ     i (  j  j     )
+>                (  h     )
+>       ∫     φ  ( u  - f ) \ dΓ = 0.
+>        Γ     n
 >         "d"
 >   $$
 
@@ -387,7 +431,7 @@ and $φ$ a linear basis on $T$.  The following snippet shows the differences
 between the script for purely Dirichlet boundary conditions with the present
 case:
 
-    @include laplace_mixed.py[20:33]
+    @include laplace_mixed.py[22:32]
 
 
 The log of this simulation: [laplace_mixed.py](logs/laplace_mixed.py/log.html).
@@ -397,11 +441,10 @@ The solution:
 ![dirichlet](logs/laplace_mixed.py/solution000.png)
 
 Since we are applying Dirichlet boundary conditions only on the left and bottom
-side of the domain, we have updated the projection of `f` as follows:
+side of the domain, we have updated the integral `sqr` as follows:
 
-    # construct dirichlet boundary constraints
-    cons = domain.boundary['left,bottom'].project(
-        f, onto=basis, geometry=geom, ischeme=ischeme)
+    sqr = domain.boundary['left,bottom'].integral(
+        '(uh - f)^2' @ ns, **kwargs)
 
 The expression `domain['left,bottom']` generates a subtopology of the boundary
 of `domain` limited to the left and bottom side.
@@ -409,20 +452,17 @@ of `domain` limited to the left and bottom side.
 The Neumann boundary condition, the left hand side of
 $\eqref{mixed-neumann-bc}$ is implemented as follows:
 
-    # construct right hand side
-    n = geom.normal()
-    b = domain.boundary['right,top'].integrate(
-        basis['i'] * f[',k'] * n['k'],
-        geometry=geom, ischeme=ischeme)
+    res += domain.boundary['right,top'].integrate(
+        'φ_n f_,k n_,k' @ ns, **kwargs)
 
-The function `geom.normal()` returns a Nutils function that represents the
-normal of the geometry at a domain or element boundary.
+The member `n` is by default the normal of the default geometry `x` of the
+namespace at a domain or element boundary.
 
 Circular geometry
 =================
 
 So far we have been using square domains.  The strict separation between
-topology and geometry might have looked unnecessarily  complex.  However, it
+topology and geometry might have looked unnecessarily complex.  However, it
 allows us to generate a different geometry on a structured topology quite
 easily.  For the sake of argument let's apply the same problem with mixed
 boundary conditions on a circular domain:
@@ -445,7 +485,7 @@ In the Nutils script the only difference with the previous script is the
 definitions of the geometry.  We create a structured topology and geometry as
 before and redefine `geom` using $\eqref{map-square-circle}$:
 
-    @include laplace_mixed_circle.py[8:13]
+    @include laplace_mixed_circle.py[11:16]
 
 
 The log of this simulation:
@@ -493,42 +533,21 @@ function $l_2$ a circle with radius $0.15$ centred at $(0.7, 0.6)$.  The
 hyperbolic tangent is used to generated a smoothed heaviside of the level set
 $l$, with smoothness controlled by parameter $c$.
 
-A weak formulation of this system with the [Crank–Nicolson method] applied for
-the temporal part reads:
+A semi-discretized weak formulation of this system reads:
 
->   Let matrix $A$ be given by
+>   Given the solution at time $t=0$, find $u$ for all $t$ such that for all
+>   $n ∈ \{0, 1, \ldots, N-1\}$
 >   $$
->                (1          α          )
->       A   = ∫  (-- φ  φ  + - φ    φ   ) \ dΩ,
->        ij    Ω (∆t  i  j   2  i,k  j,k)
+>          (    ∂      α          )
+>       ∫  ( φ  -- u + - φ    u   ) \ dΩ = 0.
+>        Ω (  n ∂t     2  n,k  ,k )
 >   $$
->   and $B$ by
->   $$
->                (1          α          )
->       B   = ∫  (-- φ  φ  - - φ    φ   ) \ dΩ.
->        ij    Ω (∆t  i  j   2  i,k  j,k)
->   $$
->   Given the solution at time step $n$, $w_j^{(n)}$, find $w_j^{(n+1)}$ such
->   that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_i$ has *no* support on
->   the boundary $∂Ω$
->   $$
->            (n+1)        (n)
->       A   w      = B   w   ,
->        ij  j        ij  j
->   $$
->   and such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_i$ *has*
->   support on the boundary $∂Ω$
->   $$
->              (     (n+1)     )
->       ∫   φ  ( φ  w      - 0 ) \ dΩ = 0.
->        ∂Ω  i (  j  j         )
->   $$
-
-Note that matrices $A$ and $B$ do not depend on the time step $n$.
 
 Let $T$ be a structured partition of $64×64$ equally sized elements of $Ω$ and
-$φ$ a second order basis on $T$.  The following Nutils script implements the
-weak formulation and finds a solution from $t=0$ to $t=1$ in hundred steps:
+$φ$ a second order basis on $T$.  Furthermore, discretize in time with the
+[Crank–Nicolson] method, with constant time step $1/100$ and final time $1$.
+Finally, let the thermal diffusivity be $0.01$.  The following Nutils script
+implements the weak formulation and finds a solution:
 
     @include heat.py[2:]
 
@@ -542,12 +561,12 @@ The solution:
 </video>
 
 [heat equation]: https://en.wikipedia.org/wiki/Heat_equation
-[Crank–Nicolson method]: https://en.wikipedia.org/wiki/Crank%E2%80%93Nicolson_method
+[Crank–Nicolson]: https://en.wikipedia.org/wiki/Crank%E2%80%93Nicolson_method
 
 Linear elasticity
 =================
 
-All examples given above are scalar.  We end with an example of the
+All examples given above are scalar.  We now treat an example of the
 vector-valued steady [linear elasticity] equations:
 $$
     { & σ     = 0    & "on " Ω ,                .
@@ -586,32 +605,34 @@ the plate is stretched horizontally by $150%$.
 
 [linear elasticity]: https://en.wikipedia.org/wiki/Linear_elasticity
 
-Let $φ: Ω → ℝ^{N×2}$ a basis on domain $Ω$ and let $u$ be
+Let $φ: Ω_0 → ℝ^{N×2}$ a basis on domain $Ω_0$ and let $u^h$ be
 $$
+     h
     u  = φ   w .
      k    jk  j
-$$.
+$$
 A weak formulation of system $\eqref{sys-lin-elas}$ reads:
 
->   Find $w_j$ such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_{i0}$
->   and $φ_{i1}$ have no support on $Γ_{\text{left}}$ and $φ_{ik} n_k$ has no
+>   Find $u^h$ such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_{n0}$
+>   and $φ_{n1}$ have no support on $Γ_{\text{left}}$ and $φ_{nk} n_k$ has no
 >   support on $Γ_{\text{right}}$
 >   $$
->       ∫  φ     σ   w  \ dΩ = 0,
->        Ω  ik,l  jk  j
+>       ∫  φ     σ   \ dΩ = 0,
+>        Ω  nk,l  kl
 >   $$
->   such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_{i0}$ or $φ_{i1}$
->   has support on $Γ_{\text{left}}$
+>   such that for all $n ∈ \{0, 1, \ldots, N-1\}$ for which $φ_{nk}$ has support
+>   on $Γ_{\text{left}}$
 >   $$
->       ∫   φ   ( φ   w  - f ) \ dΩ = 0.
->        ∂Ω  ik (  jk  j     )
+>                h
+>       ∫   φ   u  \ dΩ = 0,
+>        ∂Ω  ik  k
 >   $$
->   and such that for all $i ∈ \{0, 1, \ldots, N-1\}$ for which $φ_{ik} n_k$
+>   and such that for all $n ∈ \{0, 1, \ldots, N-1\}$ for which $φ_{nk} n_k$
 >   has support on $Γ_{\text{right}}$
 >   $$
->                        (             1 )
->       ∫         φ   n  ( φ   n  w  - - ) \ dΩ = 0.
->        Γ         ik  k (  jl  l  j   2 )
+>                        (  h      1 )
+>       ∫         φ   n  ( u  n  - - ) \ dΩ = 0.
+>        Γ         nk  k (  l  l   2 )
 >         "right"
 >   $$
 
@@ -630,10 +651,10 @@ Vector basis
 In order to create a vector basis you can use the `vector` method of a scalar
 basis:
 
-    dbasis = domain.basis('spline', degree=degree).vector(2)
+    basis = domain.basis('spline', degree=degree).vector(2)
 
-The single argument to `vector` defines the length if the vector.  The resuling
-basis has two axes: a dofs axis of size $n*k$ and an axis of size $k$, where
+The single argument to `vector` defines the length of the vector.  The resuling
+basis has two axes: a dofs axis of size $n k$ and an axis of size $k$, where
 $n$ is the length of the scalar basis and $k$ is the vector length.
 
 Combining constraints
@@ -650,10 +671,10 @@ Linear elasticity with a hole
 
 Finally, we apply the linear elasticity problem defined above on a unit square
 domain with a hole centred at $(0.6, 0.4)$ with radius $0.2$.  In Nutils we can
-create a mesh for this domain be 'trimming' a structured mesh based on a level
+create a mesh for this domain by 'trimming' a structured mesh based on a level
 set:
 
-    @include linear_elasticity_with_hole.py[6:15]
+    @include linear_elasticity_with_hole.py[16:18]
 
 The method `trim` of a topology takes a level set as first argument and a
 maximum refinement level as second argument.  The `trim` method subdivides
@@ -662,12 +683,20 @@ is reached and removes elements where the level set is negative.  Creating a
 basis on a trimmed topology will actually create a basis on the original,
 untrimmed topology.
 
+On the finest level, a [Delauney] triangulation is performed to get a second
+order approximation of the level set. As the plotting routine `mesh` used
+previously cannot handle data from elements of different shapes, we first
+triangulate the entire domain:
+
+    @include linear_elasticity_with_hole.py[48:50]
+
 The log of this simulation:
 [linear_elasticity_with_hole.py](logs/linear_elasticity_with_hole.py/log.html).
 
 The solution:
 
 ![stress](logs/linear_elasticity_with_hole.py/stress000.png)
+[Delaunay](https://en.wikipedia.org/wiki/Delaunay_triangulation)
 
 Stress in a bone fragment
 -------------------------

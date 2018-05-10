@@ -7,10 +7,15 @@ verts = numpy.linspace(-0.5**0.5, 0.5**0.5, 9)
 domain, geom = mesh.rectilinear([verts, verts])
 basis = domain.basis('spline', degree=1)
 
-# construct matrix
-A = domain.integrate(
-    basis['i,k'] * basis['j,k'],
-    geometry=geom, ischeme='gauss3')
+# populate a Namespace
+ns = function.Namespace()
+ns.x = geom
+ns.φ = basis
+ns.uh = 'φ_n ?w_n'
+
+# define the weak formulation
+res = domain.integral('φ_n,i uh_,i' @ ns,
+                      geometry=ns.x, ischeme='gauss1')
 
 # solve linear system
-w = A.solve()
+dofs = solver.solve_linear('w', res)

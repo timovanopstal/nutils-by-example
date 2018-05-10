@@ -2,9 +2,14 @@
 
 from nutils import *
 
-def main(nelems=12, stress=library.Hooke(lmbda=1,mu=1), degree=2):
+def main(
+      nelems: 'number of elements in one direction' = 8,
+      degree: 'polynomial degree of spline basis' = 2,
+      lmbda: 'first Lamé parameter' = 1,
+      mu: 'second Lamé parameter' = 1
+    ):
 
-    # construct topology, geometry and basis
+    # construct topology and geometry
     verts = numpy.linspace(0, 1, nelems+1)
     domain, geom = mesh.rectilinear([verts,verts])
 
@@ -12,35 +17,40 @@ def main(nelems=12, stress=library.Hooke(lmbda=1,mu=1), degree=2):
     levelset = function.norm2(geom - (.6,.4)) - .2
     domain = domain.trim(levelset, maxrefine=3)
 
-    dbasis = domain.basis('spline', degree=degree).vector(2)
-    ischeme = 'gauss2'
+    # construct a basis
+    basis = domain.basis('spline', degree=degree).vector(2)
 
-    # construct matrix
-    A = domain.integrate(
-        dbasis['ik,l']*stress(dbasis.symgrad(geom))['jkl'],
-        geometry=geom, ischeme=ischeme)
-
+    ns = function.Namespace()
+    ns.x = geom
+    ns.φ = basis
+    ns.uh_k = 'φ_nk ?w_n'
+    ns.λ = lmbda
+    ns.μ = mu
+    ns.ε_ij = '(uh_i,j + uh_j,i) / 2'
+    ns.σ_ij = 'λ ε_kk δ_ij + 2 μ ε_ij'
+    
+    # define the weak formulation
+    kwargs = dict(geometry=ns.x, degree=2*degree)
+    res = domain.integral('φ_ni,j σ_ij' @ ns, **kwargs)
+    
     # construct dirichlet boundary constraints
-    cons = \
-        domain.boundary['left'].project(
-            0.0, geometry=geom,
-            onto=dbasis, ischeme=ischeme) \
-        | domain.boundary['right'].project(
-            0.5, geometry=geom,
-            onto=dbasis.dotnorm(geom), ischeme=ischeme)
+    cons = domain.boundary['left'].project(0., onto=basis, **kwargs) \
+         | domain.boundary['right'].project(0.5, onto=basis.dotnorm(geom),
+         **kwargs)
+    
+    # solve linear system
+    dofs = solver.solve_linear('w', res, constrain=cons)
 
-    # solve system
-    w = A.solve(constrain=cons)
+    # construct solution
+    x = 'x_k + uh_k' @ ns(w=dofs)
+    τ = 'σ_01' @ ns(w=dofs)
 
-    # construct solution function
-    disp = dbasis.dot(w)
-
-    # plot solution
+    # plot
     points, colors = domain.simplex.elem_eval(
-        [geom+disp, stress(disp.symgrad(geom))[0,1]],
-        ischeme='bezier3', separate=True)
+        [x, τ], ischeme='bezier3', separate=True)
     with plot.PyPlot('stress') as plt:
-        plt.mesh(points, colors, tight=False)
+        plt.mesh(points, colors)
         plt.colorbar()
 
-util.run(main)
+if __name__ == '__main__':
+    cli.run(main)

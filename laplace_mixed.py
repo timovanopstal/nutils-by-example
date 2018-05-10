@@ -2,44 +2,47 @@
 
 from nutils import *
 
-def main(nelems=8, degree=1):
+def main(
+      nelems: 'number of elements in one direction' = 8,
+      degree: 'polynomial degree of spline basis' = 1
+    ):
 
     # construct topology, geometry and basis
     verts = numpy.linspace(-0.5**0.5, 0.5**0.5, nelems+1)
     domain, geom = mesh.rectilinear([verts, verts])
     basis = domain.basis('spline', degree=degree)
-    ischeme = 'gauss3'
-
-    # construct matrix
-    A = domain.integrate(
-        basis['i,k'] * basis['j,k'],
-        geometry=geom, ischeme=ischeme)
-
-    x0, x1 = geom
-    f = function.sin(x0) * function.exp(x1)
-
+    
+    # populate a Namespace
+    ns = function.Namespace()
+    ns.x = geom
+    ns.φ = basis
+    ns.uh = 'φ_n ?w_n'
+    ns.f = 'sin(x_0) exp(x_1)'
+    
+    # define the weak formulation
+    kwargs = dict(geometry=ns.x, degree=2*degree)
+    res = domain.integral(
+        'φ_n,i uh_,i - φ_n f' @ ns, **kwargs)
+    res -= domain.boundary['right,top'].integral(
+        'φ_n f_,k n_k' @ ns, **kwargs)
+    
     # construct dirichlet boundary constraints
-    cons = domain.boundary['left,bottom'].project(
-        f, onto=basis, geometry=geom, ischeme=ischeme)
-
-    # construct right hand side
-    n = geom.normal()
-    b = domain.boundary['right,top'].integrate(
-        basis['i'] * f[',k'] * n['k'],
-        geometry=geom, ischeme=ischeme)
-
+    sqr = domain.boundary['left,bottom'].integral(
+        '(uh - f)^2' @ ns, **kwargs)
+    cons = solver.optimize('w', sqr, droptol=1e-1)
+    
     # solve linear system
-    w = A.solve(b, constrain=cons)
+    dofs = solver.solve_linear('w', res, constrain=cons)
 
     # construct solution
-    u = basis.dot(w)
+    sol = 'uh' @ ns(w=dofs)
 
     # plot
     points, colors = domain.elem_eval(
-        [geom, u], ischeme='bezier3', separate=True)
+        [geom, sol], ischeme='bezier3', separate=True)
     with plot.PyPlot('solution') as plt:
         plt.mesh(points, colors)
         plt.colorbar()
 
 if __name__ == '__main__':
-    util.run(main)
+    cli.run(main)

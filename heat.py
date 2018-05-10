@@ -2,54 +2,59 @@
 
 from nutils import *
 
-def main(alpha=0.01, nelems=64, degree=2, dt=0.01, tend=1):
+def main(
+      alpha: 'thermal diffusivity' = 0.01,
+      nelems: 'number of elements in one direction' = 64,
+      degree: 'polynomial degree of spline basis' = 2,
+      dt: 'time step' = 0.01,
+      tend: 'simulation time' = 1
+    ):
 
     # construct topology, geometry and basis
     verts = numpy.linspace(0, 1, nelems+1)
     domain, geom = mesh.rectilinear([verts, verts])
     basis = domain.basis('spline', degree=degree)
-    ischeme = 'gauss4'
 
-    # construct matrices
-    A = 1/dt * basis['i'] * basis['j'] \
-        + alpha / 2 * basis['i,k'] * basis['j,k']
-    B = 1/dt * basis['i'] * basis['j'] \
-        - alpha / 2 * basis['i,k'] * basis['j,k']
-    A, B = domain.integrate(
-        [A, B], geometry=geom, ischeme=ischeme)
-
-    # construct dirichlet boundary constraints
-    cons = domain.boundary.project(
-        0, onto=basis, geometry=geom, ischeme=ischeme)
+    # populate namespace
+    ns = function.Namespace()
+    ns.x = geom
+    ns.φ = basis
+    ns.uh = 'φ_i ?w_i'
+    ns.dt = dt
+    ns.α = alpha
 
     # construct initial condition
-    x0, x1 = geom
-    l = function.max(
-        # level set of a square centred at (0.3,0.4)
-        0.15 - (abs(0.3 - x0) + abs(0.4 - x1)),
-        # level set of a circle centred at (0.7,0.6)
-        0.15 - ((0.7 - x0)**2 + (0.6 - x1)**2)**0.5,
-    )
-    # smooth heaviside of level set
-    u0 = 0.5 + 0.5*function.tanh(nelems/2*l)
+    ns.l1 = '0.15 - (abs(0.3 - x_0) + abs(0.4 - x_1))'
+    ns.l2 = '0.15 - ((0.7 - x_0)^2 + (0.6 - x_1)^2)^0.5'
+    ns.l = function.max(ns.l1, ns.l2)
+    ns.c = nelems/2
+    ns.u0 = '0.5 + 0.5 tanh(c l)'
+    kwargs = dict(geometry=ns.x, degree=2*degree)
+    sqr = domain.integral('(uh - u0)^2' @ ns, **kwargs)
+    w0 = solver.optimize('w', sqr, droptol=1e-10)
 
-    for n in log.range('timestep', round(tend/dt) + 1):
+    # define the weak formulation
+    res = domain.integral('0.5 α uh_,i φ_n,i' @ ns, **kwargs)
+    inertia = domain.integral('uh φ_n' @ ns, **kwargs)
+    
+    # construct dirichlet boundary constraints
+    sqr = domain.boundary.integral('uh^2' @ ns, **kwargs)
+    cons = solver.optimize('w', sqr, droptol=1e-1)
 
-        if n == 0:
-            # project initial condition on `basis`
-            w = domain.project(
-                u0, onto=basis, geometry=geom,
-                ischeme=ischeme)
-        else:
-            # time step
-            w = A.solve(B.matvec(w), constrain=cons)
+    # time integration
+    stepper = solver.cranknicolson('w', residual=res, inertia=inertia,
+        lhs0=w0, timestep=dt, constrain=cons)
+    for n, dofs in log.enumerate('timestep', stepper):
+
+        # break if simulation time reached
+        if n*dt > tend: break
 
         # construct solution
-        u = basis.dot(w)
+        sol = 'uh' @ ns(w=dofs)
 
         # plot
         points, colors = domain.elem_eval(
-            [geom, u], ischeme='bezier3', separate=True)
+            [geom, sol], ischeme='bezier3', separate=True)
         with plot.PyPlot('temperature') as plt:
             plt.title('t={:5.2f}'.format(n*dt))
             plt.mesh(points, colors)
@@ -57,4 +62,4 @@ def main(alpha=0.01, nelems=64, degree=2, dt=0.01, tend=1):
             plt.clim(0, 1)
 
 if __name__ == '__main__':
-    util.run(main)
+    cli.run(main)
